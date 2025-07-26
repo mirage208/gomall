@@ -17,7 +17,7 @@ for app in user product order payment cart; do
         echo "Generating gRPC code for: $proto_file"
 
         goctl rpc protoc "$proto_file" \
-            --proto_path="$PROJECT_ROOT/app/$app/spec/rpc" \
+            --proto_path="$PROJECT_ROOT/app/$app/specs/rpc" \
             --go_out="$PROJECT_ROOT/app/$app/rpc/pb" \
             --go-grpc_out="$PROJECT_ROOT/app/$app/rpc/pb" \
             --zrpc_out="$PROJECT_ROOT/app/$app/rpc" \
