@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/payment_rpc /app/payment_rpc
 COPY app/payment/rpc/etc /app/etc
 
+EXPOSE 9004
+
 CMD ["./payment_rpc", "-f", "etc/payment.yaml"]

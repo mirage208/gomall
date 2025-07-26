@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/user_api /app/user_api
 COPY app/user/api/etc /app/etc
 
+EXPOSE 8001
+
 CMD ["./user_api", "-f", "etc/user-api.yaml"]

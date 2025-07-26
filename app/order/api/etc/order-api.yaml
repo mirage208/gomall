@@ -1,3 +1,10 @@
 Name: order-api
 Host: 0.0.0.0
-Port: 8888
+Port: 8003
+
+# API Metrics配置
+DevServer:
+  Enabled: true
+  Port: 6003
+  MetricsPath: /metrics
+  EnableMetrics: true

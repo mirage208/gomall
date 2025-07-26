@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/payment_api /app/payment_api
 COPY app/payment/api/etc /app/etc
 
+EXPOSE 8004
+
 CMD ["./payment_api", "-f", "etc/payment-api.yaml"]

@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/order_rpc /app/order_rpc
 COPY app/order/rpc/etc /app/etc
 
+EXPOSE 9003
+
 CMD ["./order_rpc", "-f", "etc/order.yaml"]

@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/product_api /app/product_api
 COPY app/product/api/etc /app/etc
 
+EXPOSE 8002
+
 CMD ["./product_api", "-f", "etc/product-api.yaml"]

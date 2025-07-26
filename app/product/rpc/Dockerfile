@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/product_rpc /app/product_rpc
 COPY app/product/rpc/etc /app/etc
 
+EXPOSE 9002
+
 CMD ["./product_rpc", "-f", "etc/product.yaml"]

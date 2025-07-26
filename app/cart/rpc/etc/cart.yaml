@@ -1,6 +1,13 @@
 Name: cart.rpc
-ListenOn: 0.0.0.0:8080
+ListenOn: 0.0.0.0:9005
 Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: cart.rpc
+
+# RPC Metrics配置
+DevServer:
+  Enabled: true
+  Port: 6015
+  MetricsPath: /metrics
+  EnableMetrics: true

@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/user_rpc /app/user_rpc
 COPY app/user/rpc/etc /app/etc
 
+EXPOSE 9001
+
 CMD ["./user_rpc", "-f", "etc/user.yaml"]

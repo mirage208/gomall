@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/order_api /app/order_api
 COPY app/order/api/etc /app/etc
 
+EXPOSE 8003
+
 CMD ["./order_api", "-f", "etc/order-api.yaml"]

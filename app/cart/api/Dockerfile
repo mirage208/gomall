@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/cart_api /app/cart_api
 COPY app/cart/api/etc /app/etc
 
+EXPOSE 8005
+
 CMD ["./cart_api", "-f", "etc/cart-api.yaml"]

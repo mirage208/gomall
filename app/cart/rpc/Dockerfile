@@ -27,4 +27,6 @@ WORKDIR /app
 COPY --from=builder /app/cart_rpc /app/cart_rpc
 COPY app/cart/rpc/etc /app/etc
 
+EXPOSE 9005
+
 CMD ["./cart_rpc", "-f", "etc/cart.yaml"]
