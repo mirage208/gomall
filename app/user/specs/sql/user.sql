@@ -1,0 +1,21 @@
+CREATE TABLE `user` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `delete_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `del_state` tinyint NOT NULL DEFAULT 0 COMMENT '删除状态：0-未删除，1-已删除',
+  `mobile` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号',
+  `username` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
+  `email` varchar(128) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `sex` tinyint (1) NOT NULL DEFAULT 1 COMMENT '性别：1-男性，2-女性',
+  `header_image_id` bigint NOT NULL DEFAULT 0 COMMENT '用户图像id',
+  `signature` text NOT NULL DEFAULT '' COMMENT '个性签名',
+  `introduction` text NOT NULL DEFAULT '' COMMENT '自我介绍',
+  `money` bigint NOT NULL DEFAULT 0 COMMENT '用户账户余额(单位：分)',
+  `sign_status` tinyint (1) NOT NULL DEFAULT 1 COMMENT '注册来源：1-网站注册，2-qq注册，3-微信注册',
+  `role` tinyint (1) NOT NULL DEFAULT 1 COMMENT '权限：-1-被禁用用户，1-普通用户,2-管理员',
+  `is_boss` tinyint (1) NOT NULL DEFAULT 0 COMMENT '是否为商家：0-不是，1-是',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ix_mobile` (`mobile`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;

@@ -1,0 +1,71 @@
+syntax = "v1"
+
+info (
+	title:   "cart.api"
+	desc:    "购物车模块"
+	author:  "strangers"
+	version: "v1"
+)
+
+type CartProduct {
+	ID            int64  `json:"id"`
+	ProductID     int64  `json:"productId"`
+	Title         string `json:"title"`
+	Banner        string `json:"banner"`
+	Price         int64  `json:"price"`
+	DiscountPrice int64  `json:"discountPrice"`
+	Count         int64  `json:"count"`
+	Checked       int64  `json:"checked"`
+}
+
+type (
+	AddProductToCartReq {
+		ProductID int64 `json:"productId"`
+		Count     int64 `json:"count"`
+	}
+)
+
+type (
+	CartProductListResp {
+		CartProducts []CartProduct `json:"cartProducts"`
+	}
+)
+
+type (
+	DeteleProductFromCartReq {
+		CartID int64 `json:"cartId"`
+	}
+)
+
+type (
+	UpdateProductDetailReq {
+		CartID int64 `json:"cartId"`
+		Count  int64 `json:"count"`
+		Check  int64 `json:"check"`
+	}
+)
+
+@server (
+	group:      cart
+	prefix:     cart/v1
+	jwt:        JwtAuth
+	middleware: CheckUserState
+)
+service cart-api {
+	@doc "添加商品到购物车"
+	@handler addProductToCart
+	post /cart (AddProductToCartReq)
+
+	@doc "购物车商品列表"
+	@handler cartProductList
+	get /cart returns (CartProductListResp)
+
+	@doc "删除购物车商品"
+	@handler deleteProductFromCart
+	delete /cart (DeteleProductFromCartReq)
+
+	@doc "修改购物车商品的信息"
+	@handler updateProductDetail
+	put /cart (UpdateProductDetailReq)
+}
+
