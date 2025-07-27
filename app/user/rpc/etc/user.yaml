@@ -11,3 +11,14 @@ DevServer:
   Port: 6011
   MetricsPath: /metrics
   EnableMetrics: true
+
+Mysql:
+  DataSource: mall_dev:Password@dev0@tcp(localhost:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+- Host: localhost:6379
+  Type: node
+  Pass:
+
+
+Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe

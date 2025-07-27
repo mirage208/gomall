@@ -4,6 +4,7 @@ go 1.24.4
 
 require (
 	github.com/zeromicro/go-zero v1.8.5
+	golang.org/x/crypto v0.38.0
 	google.golang.org/grpc v1.74.2
 	google.golang.org/protobuf v1.36.6
 )

@@ -392,6 +392,143 @@ func (x *UserInfoResponse) GetMobile() string {
 	return ""
 }
 
+// 用户信息修改
+type UserInfoUpdateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=Name,proto3,oneof" json:"Name,omitempty"`
+	Gender        *int64                 `protobuf:"varint,3,opt,name=Gender,proto3,oneof" json:"Gender,omitempty"`
+	Mobile        *string                `protobuf:"bytes,4,opt,name=Mobile,proto3,oneof" json:"Mobile,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserInfoUpdateRequest) Reset() {
+	*x = UserInfoUpdateRequest{}
+	mi := &file_user_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserInfoUpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserInfoUpdateRequest) ProtoMessage() {}
+
+func (x *UserInfoUpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserInfoUpdateRequest.ProtoReflect.Descriptor instead.
+func (*UserInfoUpdateRequest) Descriptor() ([]byte, []int) {
+	return file_user_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UserInfoUpdateRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserInfoUpdateRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UserInfoUpdateRequest) GetGender() int64 {
+	if x != nil && x.Gender != nil {
+		return *x.Gender
+	}
+	return 0
+}
+
+func (x *UserInfoUpdateRequest) GetMobile() string {
+	if x != nil && x.Mobile != nil {
+		return *x.Mobile
+	}
+	return ""
+}
+
+type UserInfoUpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
+	Gender        int64                  `protobuf:"varint,3,opt,name=Gender,proto3" json:"Gender,omitempty"`
+	Mobile        string                 `protobuf:"bytes,4,opt,name=Mobile,proto3" json:"Mobile,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserInfoUpdateResponse) Reset() {
+	*x = UserInfoUpdateResponse{}
+	mi := &file_user_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserInfoUpdateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserInfoUpdateResponse) ProtoMessage() {}
+
+func (x *UserInfoUpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_user_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserInfoUpdateResponse.ProtoReflect.Descriptor instead.
+func (*UserInfoUpdateResponse) Descriptor() ([]byte, []int) {
+	return file_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UserInfoUpdateResponse) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserInfoUpdateResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UserInfoUpdateResponse) GetGender() int64 {
+	if x != nil {
+		return x.Gender
+	}
+	return 0
+}
+
+func (x *UserInfoUpdateResponse) GetMobile() string {
+	if x != nil {
+		return x.Mobile
+	}
+	return ""
+}
+
 var File_user_proto protoreflect.FileDescriptor
 
 const file_user_proto_rawDesc = "" +
@@ -422,11 +559,25 @@ const file_user_proto_rawDesc = "" +
 	"\x02Id\x18\x01 \x01(\x03R\x02Id\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x16\n" +
 	"\x06Gender\x18\x03 \x01(\x03R\x06Gender\x12\x16\n" +
-	"\x06Mobile\x18\x04 \x01(\tR\x06Mobile2\xae\x01\n" +
+	"\x06Mobile\x18\x04 \x01(\tR\x06Mobile\"\x99\x01\n" +
+	"\x15UserInfoUpdateRequest\x12\x0e\n" +
+	"\x02Id\x18\x01 \x01(\x03R\x02Id\x12\x17\n" +
+	"\x04Name\x18\x02 \x01(\tH\x00R\x04Name\x88\x01\x01\x12\x1b\n" +
+	"\x06Gender\x18\x03 \x01(\x03H\x01R\x06Gender\x88\x01\x01\x12\x1b\n" +
+	"\x06Mobile\x18\x04 \x01(\tH\x02R\x06Mobile\x88\x01\x01B\a\n" +
+	"\x05_NameB\t\n" +
+	"\a_GenderB\t\n" +
+	"\a_Mobile\"l\n" +
+	"\x16UserInfoUpdateResponse\x12\x0e\n" +
+	"\x02Id\x18\x01 \x01(\x03R\x02Id\x12\x12\n" +
+	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x16\n" +
+	"\x06Gender\x18\x03 \x01(\x03R\x06Gender\x12\x16\n" +
+	"\x06Mobile\x18\x04 \x01(\tR\x06Mobile2\xfb\x01\n" +
 	"\x04User\x120\n" +
 	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponse\x129\n" +
 	"\bRegister\x12\x15.user.RegisterRequest\x1a\x16.user.RegisterResponse\x129\n" +
-	"\bUserInfo\x12\x15.user.UserInfoRequest\x1a\x16.user.UserInfoResponseB\bZ\x06./userb\x06proto3"
+	"\bUserInfo\x12\x15.user.UserInfoRequest\x1a\x16.user.UserInfoResponse\x12K\n" +
+	"\x0eUserInfoUpdate\x12\x1b.user.UserInfoUpdateRequest\x1a\x1c.user.UserInfoUpdateResponseB\bZ\x06./userb\x06proto3"
 
 var (
 	file_user_proto_rawDescOnce sync.Once
@@ -440,24 +591,28 @@ func file_user_proto_rawDescGZIP() []byte {
 	return file_user_proto_rawDescData
 }
 
-var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_user_proto_goTypes = []any{
-	(*LoginRequest)(nil),     // 0: user.LoginRequest
-	(*LoginResponse)(nil),    // 1: user.LoginResponse
-	(*RegisterRequest)(nil),  // 2: user.RegisterRequest
-	(*RegisterResponse)(nil), // 3: user.RegisterResponse
-	(*UserInfoRequest)(nil),  // 4: user.UserInfoRequest
-	(*UserInfoResponse)(nil), // 5: user.UserInfoResponse
+	(*LoginRequest)(nil),           // 0: user.LoginRequest
+	(*LoginResponse)(nil),          // 1: user.LoginResponse
+	(*RegisterRequest)(nil),        // 2: user.RegisterRequest
+	(*RegisterResponse)(nil),       // 3: user.RegisterResponse
+	(*UserInfoRequest)(nil),        // 4: user.UserInfoRequest
+	(*UserInfoResponse)(nil),       // 5: user.UserInfoResponse
+	(*UserInfoUpdateRequest)(nil),  // 6: user.UserInfoUpdateRequest
+	(*UserInfoUpdateResponse)(nil), // 7: user.UserInfoUpdateResponse
 }
 var file_user_proto_depIdxs = []int32{
 	0, // 0: user.User.Login:input_type -> user.LoginRequest
 	2, // 1: user.User.Register:input_type -> user.RegisterRequest
 	4, // 2: user.User.UserInfo:input_type -> user.UserInfoRequest
-	1, // 3: user.User.Login:output_type -> user.LoginResponse
-	3, // 4: user.User.Register:output_type -> user.RegisterResponse
-	5, // 5: user.User.UserInfo:output_type -> user.UserInfoResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	6, // 3: user.User.UserInfoUpdate:input_type -> user.UserInfoUpdateRequest
+	1, // 4: user.User.Login:output_type -> user.LoginResponse
+	3, // 5: user.User.Register:output_type -> user.RegisterResponse
+	5, // 6: user.User.UserInfo:output_type -> user.UserInfoResponse
+	7, // 7: user.User.UserInfoUpdate:output_type -> user.UserInfoUpdateResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -468,13 +623,14 @@ func file_user_proto_init() {
 	if File_user_proto != nil {
 		return
 	}
+	file_user_proto_msgTypes[6].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_proto_rawDesc), len(file_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

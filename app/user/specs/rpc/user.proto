@@ -42,8 +42,24 @@ message UserInfoResponse {
 }
 // 用户信息
 
+// 用户信息修改
+message UserInfoUpdateRequest {
+  int64 Id = 1;
+  optional string Name = 2;
+  optional int64 Gender = 3;
+  optional string Mobile = 4;
+}
+message UserInfoUpdateResponse {
+  int64 Id = 1;
+  string Name = 2;
+  int64 Gender = 3;
+  string Mobile = 4;
+}
+// 用户信息修改
+
 service User {
   rpc Login(LoginRequest) returns (LoginResponse);
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc UserInfo(UserInfoRequest) returns (UserInfoResponse);
+  rpc UserInfoUpdate(UserInfoUpdateRequest) returns (UserInfoUpdateResponse);
 }
