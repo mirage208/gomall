@@ -68,7 +68,7 @@ message GenerateTokenResp {
 }
 
 // service
-service usercenter {
+service user {
   rpc login(LoginReq) returns (LoginResp);
   rpc register(RegisterReq) returns (RegisterResp);
   rpc getUserInfo(GetUserInfoReq) returns (GetUserInfoResp);

@@ -2,7 +2,7 @@
 // goctl 1.8.5
 // Source: user.proto
 
-package usercenter
+package userclient
 
 import (
 	"context"
@@ -29,7 +29,7 @@ type (
 	User                     = user.User
 	UserAuth                 = user.UserAuth
 
-	Usercenter interface {
+	UserZrpcClient interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 		GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
@@ -38,43 +38,43 @@ type (
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 	}
 
-	defaultUsercenter struct {
+	defaultUserZrpcClient struct {
 		cli zrpc.Client
 	}
 )
 
-func NewUsercenter(cli zrpc.Client) Usercenter {
-	return &defaultUsercenter{
+func NewUserZrpcClient(cli zrpc.Client) UserZrpcClient {
+	return &defaultUserZrpcClient{
 		cli: cli,
 	}
 }
 
-func (m *defaultUsercenter) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.Login(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.Register(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.GetUserInfo(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.GetUserAuthByAuthKey(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.GetUserAuthByUserId(ctx, in, opts...)
 }
 
-func (m *defaultUsercenter) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
-	client := user.NewUsercenterClient(m.cli.Conn())
+func (m *defaultUserZrpcClient) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
+	client := user.NewUserClient(m.cli.Conn())
 	return client.GenerateToken(ctx, in, opts...)
 }

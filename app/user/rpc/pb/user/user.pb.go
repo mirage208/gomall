@@ -871,9 +871,8 @@ const file_user_proto_rawDesc = "" +
 	"\x11GenerateTokenResp\x12 \n" +
 	"\vaccessToken\x18\x01 \x01(\tR\vaccessToken\x12\"\n" +
 	"\faccessExpire\x18\x02 \x01(\x03R\faccessExpire\x12\"\n" +
-	"\frefreshAfter\x18\x03 \x01(\x03R\frefreshAfter2\x91\x03\n" +
-	"\n" +
-	"usercenter\x12(\n" +
+	"\frefreshAfter\x18\x03 \x01(\x03R\frefreshAfter2\x8b\x03\n" +
+	"\x04user\x12(\n" +
 	"\x05login\x12\x0e.user.LoginReq\x1a\x0f.user.LoginResp\x121\n" +
 	"\bregister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterResp\x12:\n" +
 	"\vgetUserInfo\x12\x14.user.GetUserInfoReq\x1a\x15.user.GetUserInfoResp\x12U\n" +
@@ -914,18 +913,18 @@ var file_user_proto_depIdxs = []int32{
 	0,  // 0: user.GetUserInfoResp.user:type_name -> user.User
 	1,  // 1: user.GetUserAuthByAuthKeyResp.userAuth:type_name -> user.UserAuth
 	1,  // 2: user.GetUserAuthyUserIdResp.userAuth:type_name -> user.UserAuth
-	4,  // 3: user.usercenter.login:input_type -> user.LoginReq
-	2,  // 4: user.usercenter.register:input_type -> user.RegisterReq
-	6,  // 5: user.usercenter.getUserInfo:input_type -> user.GetUserInfoReq
-	8,  // 6: user.usercenter.getUserAuthByAuthKey:input_type -> user.GetUserAuthByAuthKeyReq
-	10, // 7: user.usercenter.getUserAuthByUserId:input_type -> user.GetUserAuthByUserIdReq
-	12, // 8: user.usercenter.generateToken:input_type -> user.GenerateTokenReq
-	5,  // 9: user.usercenter.login:output_type -> user.LoginResp
-	3,  // 10: user.usercenter.register:output_type -> user.RegisterResp
-	7,  // 11: user.usercenter.getUserInfo:output_type -> user.GetUserInfoResp
-	9,  // 12: user.usercenter.getUserAuthByAuthKey:output_type -> user.GetUserAuthByAuthKeyResp
-	11, // 13: user.usercenter.getUserAuthByUserId:output_type -> user.GetUserAuthyUserIdResp
-	13, // 14: user.usercenter.generateToken:output_type -> user.GenerateTokenResp
+	4,  // 3: user.user.login:input_type -> user.LoginReq
+	2,  // 4: user.user.register:input_type -> user.RegisterReq
+	6,  // 5: user.user.getUserInfo:input_type -> user.GetUserInfoReq
+	8,  // 6: user.user.getUserAuthByAuthKey:input_type -> user.GetUserAuthByAuthKeyReq
+	10, // 7: user.user.getUserAuthByUserId:input_type -> user.GetUserAuthByUserIdReq
+	12, // 8: user.user.generateToken:input_type -> user.GenerateTokenReq
+	5,  // 9: user.user.login:output_type -> user.LoginResp
+	3,  // 10: user.user.register:output_type -> user.RegisterResp
+	7,  // 11: user.user.getUserInfo:output_type -> user.GetUserInfoResp
+	9,  // 12: user.user.getUserAuthByAuthKey:output_type -> user.GetUserAuthByAuthKeyResp
+	11, // 13: user.user.getUserAuthByUserId:output_type -> user.GetUserAuthyUserIdResp
+	13, // 14: user.user.generateToken:output_type -> user.GenerateTokenResp
 	9,  // [9:15] is the sub-list for method output_type
 	3,  // [3:9] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
