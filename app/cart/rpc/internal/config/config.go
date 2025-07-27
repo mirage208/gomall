@@ -13,5 +13,6 @@ type Config struct {
 	}
 	CacheRedis cache.CacheConf
 
-	UserRpc zrpc.RpcClientConf
+	UserRpc    zrpc.RpcClientConf
+	ProductRpc zrpc.RpcClientConf
 }
