@@ -16,10 +16,10 @@ message CreateResponse { int64 id = 1; }
 // 订单修改
 message UpdateRequest {
   int64 id = 1;
-  int64 Uid = 2;
-  int64 Pid = 3;
-  int64 Amount = 4;
-  int64 Status = 5;
+  optional int64 Uid = 2;
+  optional int64 Pid = 3;
+  optional int64 Amount = 4;
+  optional int64 Status = 5;
 }
 message UpdateResponse {}
 // 订单修改
