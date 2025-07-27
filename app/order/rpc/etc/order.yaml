@@ -11,3 +11,24 @@ DevServer:
   Port: 6013
   MetricsPath: /metrics
   EnableMetrics: true
+
+Mysql:
+  DataSource: mall_dev:Password@dev0@tcp(localhost:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+- Host: localhost:6379
+  Type: node
+  Pass:
+
+
+UserRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: user.rpc
+
+ProductRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: product.rpc
