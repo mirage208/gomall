@@ -11,8 +11,8 @@ service cart {
 }
 
 message CartProduct {
-  int64   ID = 1;
-  int64   ProductID = 2;
+  int64   Id = 1;
+  int64   ProductId = 2;
   string  Title = 3;
   string  Banner = 4;
   int64   Price = 5;
@@ -22,28 +22,28 @@ message CartProduct {
 }
 
 message AddProductToCartReq {
-  int64   UserID = 1;
-  int64   ProductID = 2;
+  int64   UserId = 1;
+  int64   ProductId = 2;
   int64   Count = 3;
 }
 message AddProductToCartResp {}
 
 message CartProductListReq {
-  int64   UserID = 1;
+  int64   UserId = 1;
 }
 message CartProductListResp {
   repeated CartProduct CartProducts = 1;
 }
 
 message DeleteProductFromCartReq {
-  int64 UserID = 1;
-  int64 CartID = 2;
+  int64 UserId = 1;
+  int64 CartId = 2;
 }
 message DeleteProductFromCartResp {}
 
 message UpdateProductDetailReq {
-  int64   CartID = 1;
-  int64   UserID = 2;
+  int64   CartId = 1;
+  int64   UserId = 2;
   int64   Count = 3;
   int64   Check = 4;
 }

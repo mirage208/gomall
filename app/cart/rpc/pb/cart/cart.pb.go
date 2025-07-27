@@ -23,8 +23,8 @@ const (
 
 type CartProduct struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ID            int64                  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	ProductID     int64                  `protobuf:"varint,2,opt,name=ProductID,proto3" json:"ProductID,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	ProductId     int64                  `protobuf:"varint,2,opt,name=ProductId,proto3" json:"ProductId,omitempty"`
 	Title         string                 `protobuf:"bytes,3,opt,name=Title,proto3" json:"Title,omitempty"`
 	Banner        string                 `protobuf:"bytes,4,opt,name=Banner,proto3" json:"Banner,omitempty"`
 	Price         int64                  `protobuf:"varint,5,opt,name=Price,proto3" json:"Price,omitempty"`
@@ -65,16 +65,16 @@ func (*CartProduct) Descriptor() ([]byte, []int) {
 	return file_cart_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CartProduct) GetID() int64 {
+func (x *CartProduct) GetId() int64 {
 	if x != nil {
-		return x.ID
+		return x.Id
 	}
 	return 0
 }
 
-func (x *CartProduct) GetProductID() int64 {
+func (x *CartProduct) GetProductId() int64 {
 	if x != nil {
-		return x.ProductID
+		return x.ProductId
 	}
 	return 0
 }
@@ -123,8 +123,8 @@ func (x *CartProduct) GetChecked() int64 {
 
 type AddProductToCartReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        int64                  `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
-	ProductID     int64                  `protobuf:"varint,2,opt,name=ProductID,proto3" json:"ProductID,omitempty"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	ProductId     int64                  `protobuf:"varint,2,opt,name=ProductId,proto3" json:"ProductId,omitempty"`
 	Count         int64                  `protobuf:"varint,3,opt,name=Count,proto3" json:"Count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -160,16 +160,16 @@ func (*AddProductToCartReq) Descriptor() ([]byte, []int) {
 	return file_cart_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AddProductToCartReq) GetUserID() int64 {
+func (x *AddProductToCartReq) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
 
-func (x *AddProductToCartReq) GetProductID() int64 {
+func (x *AddProductToCartReq) GetProductId() int64 {
 	if x != nil {
-		return x.ProductID
+		return x.ProductId
 	}
 	return 0
 }
@@ -219,7 +219,7 @@ func (*AddProductToCartResp) Descriptor() ([]byte, []int) {
 
 type CartProductListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        int64                  `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -254,9 +254,9 @@ func (*CartProductListReq) Descriptor() ([]byte, []int) {
 	return file_cart_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *CartProductListReq) GetUserID() int64 {
+func (x *CartProductListReq) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
@@ -307,8 +307,8 @@ func (x *CartProductListResp) GetCartProducts() []*CartProduct {
 
 type DeleteProductFromCartReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserID        int64                  `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
-	CartID        int64                  `protobuf:"varint,2,opt,name=CartID,proto3" json:"CartID,omitempty"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	CartId        int64                  `protobuf:"varint,2,opt,name=CartId,proto3" json:"CartId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,16 +343,16 @@ func (*DeleteProductFromCartReq) Descriptor() ([]byte, []int) {
 	return file_cart_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DeleteProductFromCartReq) GetUserID() int64 {
+func (x *DeleteProductFromCartReq) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
 
-func (x *DeleteProductFromCartReq) GetCartID() int64 {
+func (x *DeleteProductFromCartReq) GetCartId() int64 {
 	if x != nil {
-		return x.CartID
+		return x.CartId
 	}
 	return 0
 }
@@ -395,8 +395,8 @@ func (*DeleteProductFromCartResp) Descriptor() ([]byte, []int) {
 
 type UpdateProductDetailReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CartID        int64                  `protobuf:"varint,1,opt,name=CartID,proto3" json:"CartID,omitempty"`
-	UserID        int64                  `protobuf:"varint,2,opt,name=UserID,proto3" json:"UserID,omitempty"`
+	CartId        int64                  `protobuf:"varint,1,opt,name=CartId,proto3" json:"CartId,omitempty"`
+	UserId        int64                  `protobuf:"varint,2,opt,name=UserId,proto3" json:"UserId,omitempty"`
 	Count         int64                  `protobuf:"varint,3,opt,name=Count,proto3" json:"Count,omitempty"`
 	Check         int64                  `protobuf:"varint,4,opt,name=Check,proto3" json:"Check,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -433,16 +433,16 @@ func (*UpdateProductDetailReq) Descriptor() ([]byte, []int) {
 	return file_cart_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *UpdateProductDetailReq) GetCartID() int64 {
+func (x *UpdateProductDetailReq) GetCartId() int64 {
 	if x != nil {
-		return x.CartID
+		return x.CartId
 	}
 	return 0
 }
 
-func (x *UpdateProductDetailReq) GetUserID() int64 {
+func (x *UpdateProductDetailReq) GetUserId() int64 {
 	if x != nil {
-		return x.UserID
+		return x.UserId
 	}
 	return 0
 }
@@ -504,8 +504,8 @@ const file_cart_proto_rawDesc = "" +
 	"\n" +
 	"cart.proto\x12\x04cart\"\xd5\x01\n" +
 	"\vCartProduct\x12\x0e\n" +
-	"\x02ID\x18\x01 \x01(\x03R\x02ID\x12\x1c\n" +
-	"\tProductID\x18\x02 \x01(\x03R\tProductID\x12\x14\n" +
+	"\x02Id\x18\x01 \x01(\x03R\x02Id\x12\x1c\n" +
+	"\tProductId\x18\x02 \x01(\x03R\tProductId\x12\x14\n" +
 	"\x05Title\x18\x03 \x01(\tR\x05Title\x12\x16\n" +
 	"\x06Banner\x18\x04 \x01(\tR\x06Banner\x12\x14\n" +
 	"\x05Price\x18\x05 \x01(\x03R\x05Price\x12$\n" +
@@ -513,21 +513,21 @@ const file_cart_proto_rawDesc = "" +
 	"\x05Count\x18\a \x01(\x03R\x05Count\x12\x18\n" +
 	"\aChecked\x18\b \x01(\x03R\aChecked\"a\n" +
 	"\x13AddProductToCartReq\x12\x16\n" +
-	"\x06UserID\x18\x01 \x01(\x03R\x06UserID\x12\x1c\n" +
-	"\tProductID\x18\x02 \x01(\x03R\tProductID\x12\x14\n" +
+	"\x06UserId\x18\x01 \x01(\x03R\x06UserId\x12\x1c\n" +
+	"\tProductId\x18\x02 \x01(\x03R\tProductId\x12\x14\n" +
 	"\x05Count\x18\x03 \x01(\x03R\x05Count\"\x16\n" +
 	"\x14AddProductToCartResp\",\n" +
 	"\x12CartProductListReq\x12\x16\n" +
-	"\x06UserID\x18\x01 \x01(\x03R\x06UserID\"L\n" +
+	"\x06UserId\x18\x01 \x01(\x03R\x06UserId\"L\n" +
 	"\x13CartProductListResp\x125\n" +
 	"\fCartProducts\x18\x01 \x03(\v2\x11.cart.CartProductR\fCartProducts\"J\n" +
 	"\x18DeleteProductFromCartReq\x12\x16\n" +
-	"\x06UserID\x18\x01 \x01(\x03R\x06UserID\x12\x16\n" +
-	"\x06CartID\x18\x02 \x01(\x03R\x06CartID\"\x1b\n" +
+	"\x06UserId\x18\x01 \x01(\x03R\x06UserId\x12\x16\n" +
+	"\x06CartId\x18\x02 \x01(\x03R\x06CartId\"\x1b\n" +
 	"\x19DeleteProductFromCartResp\"t\n" +
 	"\x16UpdateProductDetailReq\x12\x16\n" +
-	"\x06CartID\x18\x01 \x01(\x03R\x06CartID\x12\x16\n" +
-	"\x06UserID\x18\x02 \x01(\x03R\x06UserID\x12\x14\n" +
+	"\x06CartId\x18\x01 \x01(\x03R\x06CartId\x12\x16\n" +
+	"\x06UserId\x18\x02 \x01(\x03R\x06UserId\x12\x14\n" +
 	"\x05Count\x18\x03 \x01(\x03R\x05Count\x12\x14\n" +
 	"\x05Check\x18\x04 \x01(\x03R\x05Check\"\x19\n" +
 	"\x17UpdateProductDetailResp2\xc7\x02\n" +
