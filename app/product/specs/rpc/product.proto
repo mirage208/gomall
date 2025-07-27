@@ -18,11 +18,11 @@ message CreateResponse { int64 id = 1; }
 // 产品修改
 message UpdateRequest {
   int64 id = 1;
-  string Name = 2;
-  string Desc = 3;
-  int64 Stock = 4;
-  int64 Amount = 5;
-  int64 Status = 6;
+  optional string Name = 2;
+  optional string Desc = 3;
+  optional int64 Stock = 4;
+  optional int64 Amount = 5;
+  optional int64 Status = 6;
 }
 message UpdateResponse {}
 // 产品修改

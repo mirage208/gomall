@@ -146,11 +146,11 @@ func (x *CreateResponse) GetId() int64 {
 type UpdateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
-	Desc          string                 `protobuf:"bytes,3,opt,name=Desc,proto3" json:"Desc,omitempty"`
-	Stock         int64                  `protobuf:"varint,4,opt,name=Stock,proto3" json:"Stock,omitempty"`
-	Amount        int64                  `protobuf:"varint,5,opt,name=Amount,proto3" json:"Amount,omitempty"`
-	Status        int64                  `protobuf:"varint,6,opt,name=Status,proto3" json:"Status,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=Name,proto3,oneof" json:"Name,omitempty"`
+	Desc          *string                `protobuf:"bytes,3,opt,name=Desc,proto3,oneof" json:"Desc,omitempty"`
+	Stock         *int64                 `protobuf:"varint,4,opt,name=Stock,proto3,oneof" json:"Stock,omitempty"`
+	Amount        *int64                 `protobuf:"varint,5,opt,name=Amount,proto3,oneof" json:"Amount,omitempty"`
+	Status        *int64                 `protobuf:"varint,6,opt,name=Status,proto3,oneof" json:"Status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -193,36 +193,36 @@ func (x *UpdateRequest) GetId() int64 {
 }
 
 func (x *UpdateRequest) GetName() string {
-	if x != nil {
-		return x.Name
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
 func (x *UpdateRequest) GetDesc() string {
-	if x != nil {
-		return x.Desc
+	if x != nil && x.Desc != nil {
+		return *x.Desc
 	}
 	return ""
 }
 
 func (x *UpdateRequest) GetStock() int64 {
-	if x != nil {
-		return x.Stock
+	if x != nil && x.Stock != nil {
+		return *x.Stock
 	}
 	return 0
 }
 
 func (x *UpdateRequest) GetAmount() int64 {
-	if x != nil {
-		return x.Amount
+	if x != nil && x.Amount != nil {
+		return *x.Amount
 	}
 	return 0
 }
 
 func (x *UpdateRequest) GetStatus() int64 {
-	if x != nil {
-		return x.Status
+	if x != nil && x.Status != nil {
+		return *x.Status
 	}
 	return 0
 }
@@ -485,14 +485,19 @@ const file_product_proto_rawDesc = "" +
 	"\x06Amount\x18\x04 \x01(\x03R\x06Amount\x12\x16\n" +
 	"\x06Status\x18\x05 \x01(\x03R\x06Status\" \n" +
 	"\x0eCreateResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"\x8d\x01\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\xd8\x01\n" +
 	"\rUpdateRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
-	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x12\n" +
-	"\x04Desc\x18\x03 \x01(\tR\x04Desc\x12\x14\n" +
-	"\x05Stock\x18\x04 \x01(\x03R\x05Stock\x12\x16\n" +
-	"\x06Amount\x18\x05 \x01(\x03R\x06Amount\x12\x16\n" +
-	"\x06Status\x18\x06 \x01(\x03R\x06Status\"\x10\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
+	"\x04Name\x18\x02 \x01(\tH\x00R\x04Name\x88\x01\x01\x12\x17\n" +
+	"\x04Desc\x18\x03 \x01(\tH\x01R\x04Desc\x88\x01\x01\x12\x19\n" +
+	"\x05Stock\x18\x04 \x01(\x03H\x02R\x05Stock\x88\x01\x01\x12\x1b\n" +
+	"\x06Amount\x18\x05 \x01(\x03H\x03R\x06Amount\x88\x01\x01\x12\x1b\n" +
+	"\x06Status\x18\x06 \x01(\x03H\x04R\x06Status\x88\x01\x01B\a\n" +
+	"\x05_NameB\a\n" +
+	"\x05_DescB\b\n" +
+	"\x06_StockB\t\n" +
+	"\a_AmountB\t\n" +
+	"\a_Status\"\x10\n" +
 	"\x0eUpdateResponse\"\x1f\n" +
 	"\rRemoveRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\"\x10\n" +
@@ -556,6 +561,7 @@ func file_product_proto_init() {
 	if File_product_proto != nil {
 		return
 	}
+	file_product_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

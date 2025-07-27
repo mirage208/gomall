@@ -1,6 +1,21 @@
 Name: product.rpc
-ListenOn: 0.0.0.0:8080
+ListenOn: 0.0.0.0:9002
 Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: product.rpc
+
+# RPC Metrics配置
+DevServer:
+  Enabled: true
+  Port: 6012
+  MetricsPath: /metrics
+  EnableMetrics: true
+
+Mysql:
+  DataSource: mall_dev:Password@dev0@tcp(localhost:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+- Host: localhost:6379
+  Type: node
+  Pass:
