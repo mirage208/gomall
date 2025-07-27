@@ -1,0 +1,13 @@
+Name: order.rpc
+ListenOn: 0.0.0.0:9003
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: order.rpc
+
+# RPC Metrics配置
+DevServer:
+  Enabled: true
+  Port: 6013
+  MetricsPath: /metrics
+  EnableMetrics: true
