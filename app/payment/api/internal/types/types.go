@@ -3,12 +3,23 @@
 
 package types
 
-type OrderPayReq struct {
-	OrderSn     string `json:"orderSn"`
-	ServiceType int64  `json:"serviceType"`
+type ThirdPaymentWxPayCallbackReq struct {
 }
 
-type OrderPayResp struct {
-	PayTotalPrice float64 `json:"payTotalPrice"`
-	PaySn         string  `json:"paySn"`
+type ThirdPaymentWxPayCallbackResp struct {
+	ReturnCode string `json:"return_code"`
+}
+
+type ThirdPaymentWxPayReq struct {
+	OrderSn     string `json:"orderSn"`
+	ServiceType string `json:"serviceType"`
+}
+
+type ThirdPaymentWxPayResp struct {
+	Appid     string `json:"appid"`
+	NonceStr  string `json:"nonceStr"`
+	PaySign   string `json:"paySign"`
+	Package   string `json:"package"`
+	Timestamp string `json:"timestamp"`
+	SignType  string `json:"signType"`
 }

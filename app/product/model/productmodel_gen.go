@@ -26,9 +26,9 @@ var (
 type (
 	productModel interface {
 		Insert(ctx context.Context, data *Product) (sql.Result, error)
-		FindOne(ctx context.Context, id int64) (*Product, error)
+		FindOne(ctx context.Context, id uint64) (*Product, error)
 		Update(ctx context.Context, data *Product) error
-		Delete(ctx context.Context, id int64) error
+		Delete(ctx context.Context, id uint64) error
 	}
 
 	defaultProductModel struct {
@@ -37,26 +37,14 @@ type (
 	}
 
 	Product struct {
-		Id            int64     `db:"id"`
-		CreateTime    time.Time `db:"create_time"`
-		UpdateTime    time.Time `db:"update_time"`
-		DeleteTime    time.Time `db:"delete_time"`
-		DelState      int64     `db:"del_state"`      // 删除状态，0-未删除，1-已删除
-		Version       int64     `db:"version"`        // 乐观锁版本号
-		CategoryId    int64     `db:"category_id"`    // 商品所属分类id
-		Title         string    `db:"title"`          // 商品标题
-		SubTitle      string    `db:"sub_title"`      // 商品副标题
-		Banner        string    `db:"banner"`         // 商品轮播图，第一张图是封面，使用"，"区分每个图片地址
-		Introduction  string    `db:"introduction"`   // 商品介绍
-		Price         int64     `db:"price"`          // 商品价格（分）
-		DiscountPrice int64     `db:"discount_price"` // 折扣价格（分）
-		OnSale        int64     `db:"on_sale"`        // 0-下架，1-上架售卖，2-缺货中
-		Stock         int64     `db:"stock"`          // 库存
-		SellCount     int64     `db:"sell_count"`     // 销售数量
-		Score         uint64    `db:"score"`          // 商品评分
-		CommentCount  uint64    `db:"comment_count"`  // 评论数量
-		StoreId       int64     `db:"store_id"`       // 店铺id
-		BossId        int64     `db:"boss_id"`        // 店主id
+		Id         uint64    `db:"id"`
+		Name       string    `db:"name"`   // 产品名称
+		Desc       string    `db:"desc"`   // 产品描述
+		Stock      uint64    `db:"stock"`  // 产品库存
+		Amount     uint64    `db:"amount"` // 产品金额
+		Status     uint64    `db:"status"` // 产品状态
+		CreateTime time.Time `db:"create_time"`
+		UpdateTime time.Time `db:"update_time"`
 	}
 )
 
@@ -67,13 +55,13 @@ func newProductModel(conn sqlx.SqlConn) *defaultProductModel {
 	}
 }
 
-func (m *defaultProductModel) Delete(ctx context.Context, id int64) error {
+func (m *defaultProductModel) Delete(ctx context.Context, id uint64) error {
 	query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, id)
 	return err
 }
 
-func (m *defaultProductModel) FindOne(ctx context.Context, id int64) (*Product, error) {
+func (m *defaultProductModel) FindOne(ctx context.Context, id uint64) (*Product, error) {
 	query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", productRows, m.table)
 	var resp Product
 	err := m.conn.QueryRowCtx(ctx, &resp, query, id)
@@ -88,14 +76,14 @@ func (m *defaultProductModel) FindOne(ctx context.Context, id int64) (*Product, 
 }
 
 func (m *defaultProductModel) Insert(ctx context.Context, data *Product) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, productRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.CategoryId, data.Title, data.SubTitle, data.Banner, data.Introduction, data.Price, data.DiscountPrice, data.OnSale, data.Stock, data.SellCount, data.Score, data.CommentCount, data.StoreId, data.BossId)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, productRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Name, data.Desc, data.Stock, data.Amount, data.Status)
 	return ret, err
 }
 
 func (m *defaultProductModel) Update(ctx context.Context, data *Product) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, productRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.CategoryId, data.Title, data.SubTitle, data.Banner, data.Introduction, data.Price, data.DiscountPrice, data.OnSale, data.Stock, data.SellCount, data.Score, data.CommentCount, data.StoreId, data.BossId, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.Name, data.Desc, data.Stock, data.Amount, data.Status, data.Id)
 	return err
 }
 

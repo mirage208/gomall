@@ -29,4 +29,4 @@ COPY app/user/api/etc /app/etc
 
 EXPOSE 8001
 
-CMD ["./user_api", "-f", "etc/user-api.yaml"]
+CMD ["./user_api", "-f", "etc/user.yaml"]

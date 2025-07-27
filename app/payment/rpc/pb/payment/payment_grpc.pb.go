@@ -19,16 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Payment_OrderPayment_FullMethodName     = "/payment.payment/orderPayment"
-	Payment_GetPaymentDetail_FullMethodName = "/payment.payment/getPaymentDetail"
+	Payment_CreatePayment_FullMethodName                    = "/payment.payment/CreatePayment"
+	Payment_GetPaymentBySn_FullMethodName                   = "/payment.payment/GetPaymentBySn"
+	Payment_UpdateTradeState_FullMethodName                 = "/payment.payment/UpdateTradeState"
+	Payment_GetPaymentSuccessRefundByOrderSn_FullMethodName = "/payment.payment/GetPaymentSuccessRefundByOrderSn"
 )
 
 // PaymentClient is the client API for Payment service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// service
 type PaymentClient interface {
-	OrderPayment(ctx context.Context, in *OrderPaymentReq, opts ...grpc.CallOption) (*OrderPaymentResp, error)
-	GetPaymentDetail(ctx context.Context, in *GetPaymentDetailReq, opts ...grpc.CallOption) (*GetPaymentDetailResp, error)
+	// 创建微信支付预处理订单
+	CreatePayment(ctx context.Context, in *CreatePaymentReq, opts ...grpc.CallOption) (*CreatePaymentResp, error)
+	// 根据sn查询流水记录
+	GetPaymentBySn(ctx context.Context, in *GetPaymentBySnReq, opts ...grpc.CallOption) (*GetPaymentBySnResp, error)
+	// 更新交易状态
+	UpdateTradeState(ctx context.Context, in *UpdateTradeStateReq, opts ...grpc.CallOption) (*UpdateTradeStateResp, error)
+	// 根据订单sn查询流水记录
+	GetPaymentSuccessRefundByOrderSn(ctx context.Context, in *GetPaymentSuccessRefundByOrderSnReq, opts ...grpc.CallOption) (*GetPaymentSuccessRefundByOrderSnResp, error)
 }
 
 type paymentClient struct {
@@ -39,20 +49,40 @@ func NewPaymentClient(cc grpc.ClientConnInterface) PaymentClient {
 	return &paymentClient{cc}
 }
 
-func (c *paymentClient) OrderPayment(ctx context.Context, in *OrderPaymentReq, opts ...grpc.CallOption) (*OrderPaymentResp, error) {
+func (c *paymentClient) CreatePayment(ctx context.Context, in *CreatePaymentReq, opts ...grpc.CallOption) (*CreatePaymentResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(OrderPaymentResp)
-	err := c.cc.Invoke(ctx, Payment_OrderPayment_FullMethodName, in, out, cOpts...)
+	out := new(CreatePaymentResp)
+	err := c.cc.Invoke(ctx, Payment_CreatePayment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentClient) GetPaymentDetail(ctx context.Context, in *GetPaymentDetailReq, opts ...grpc.CallOption) (*GetPaymentDetailResp, error) {
+func (c *paymentClient) GetPaymentBySn(ctx context.Context, in *GetPaymentBySnReq, opts ...grpc.CallOption) (*GetPaymentBySnResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPaymentDetailResp)
-	err := c.cc.Invoke(ctx, Payment_GetPaymentDetail_FullMethodName, in, out, cOpts...)
+	out := new(GetPaymentBySnResp)
+	err := c.cc.Invoke(ctx, Payment_GetPaymentBySn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentClient) UpdateTradeState(ctx context.Context, in *UpdateTradeStateReq, opts ...grpc.CallOption) (*UpdateTradeStateResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTradeStateResp)
+	err := c.cc.Invoke(ctx, Payment_UpdateTradeState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentClient) GetPaymentSuccessRefundByOrderSn(ctx context.Context, in *GetPaymentSuccessRefundByOrderSnReq, opts ...grpc.CallOption) (*GetPaymentSuccessRefundByOrderSnResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPaymentSuccessRefundByOrderSnResp)
+	err := c.cc.Invoke(ctx, Payment_GetPaymentSuccessRefundByOrderSn_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,9 +92,17 @@ func (c *paymentClient) GetPaymentDetail(ctx context.Context, in *GetPaymentDeta
 // PaymentServer is the server API for Payment service.
 // All implementations must embed UnimplementedPaymentServer
 // for forward compatibility.
+//
+// service
 type PaymentServer interface {
-	OrderPayment(context.Context, *OrderPaymentReq) (*OrderPaymentResp, error)
-	GetPaymentDetail(context.Context, *GetPaymentDetailReq) (*GetPaymentDetailResp, error)
+	// 创建微信支付预处理订单
+	CreatePayment(context.Context, *CreatePaymentReq) (*CreatePaymentResp, error)
+	// 根据sn查询流水记录
+	GetPaymentBySn(context.Context, *GetPaymentBySnReq) (*GetPaymentBySnResp, error)
+	// 更新交易状态
+	UpdateTradeState(context.Context, *UpdateTradeStateReq) (*UpdateTradeStateResp, error)
+	// 根据订单sn查询流水记录
+	GetPaymentSuccessRefundByOrderSn(context.Context, *GetPaymentSuccessRefundByOrderSnReq) (*GetPaymentSuccessRefundByOrderSnResp, error)
 	mustEmbedUnimplementedPaymentServer()
 }
 
@@ -75,11 +113,17 @@ type PaymentServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPaymentServer struct{}
 
-func (UnimplementedPaymentServer) OrderPayment(context.Context, *OrderPaymentReq) (*OrderPaymentResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method OrderPayment not implemented")
+func (UnimplementedPaymentServer) CreatePayment(context.Context, *CreatePaymentReq) (*CreatePaymentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePayment not implemented")
 }
-func (UnimplementedPaymentServer) GetPaymentDetail(context.Context, *GetPaymentDetailReq) (*GetPaymentDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPaymentDetail not implemented")
+func (UnimplementedPaymentServer) GetPaymentBySn(context.Context, *GetPaymentBySnReq) (*GetPaymentBySnResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPaymentBySn not implemented")
+}
+func (UnimplementedPaymentServer) UpdateTradeState(context.Context, *UpdateTradeStateReq) (*UpdateTradeStateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTradeState not implemented")
+}
+func (UnimplementedPaymentServer) GetPaymentSuccessRefundByOrderSn(context.Context, *GetPaymentSuccessRefundByOrderSnReq) (*GetPaymentSuccessRefundByOrderSnResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPaymentSuccessRefundByOrderSn not implemented")
 }
 func (UnimplementedPaymentServer) mustEmbedUnimplementedPaymentServer() {}
 func (UnimplementedPaymentServer) testEmbeddedByValue()                 {}
@@ -102,38 +146,74 @@ func RegisterPaymentServer(s grpc.ServiceRegistrar, srv PaymentServer) {
 	s.RegisterService(&Payment_ServiceDesc, srv)
 }
 
-func _Payment_OrderPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OrderPaymentReq)
+func _Payment_CreatePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePaymentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentServer).OrderPayment(ctx, in)
+		return srv.(PaymentServer).CreatePayment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Payment_OrderPayment_FullMethodName,
+		FullMethod: Payment_CreatePayment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServer).OrderPayment(ctx, req.(*OrderPaymentReq))
+		return srv.(PaymentServer).CreatePayment(ctx, req.(*CreatePaymentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Payment_GetPaymentDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPaymentDetailReq)
+func _Payment_GetPaymentBySn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentBySnReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentServer).GetPaymentDetail(ctx, in)
+		return srv.(PaymentServer).GetPaymentBySn(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Payment_GetPaymentDetail_FullMethodName,
+		FullMethod: Payment_GetPaymentBySn_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServer).GetPaymentDetail(ctx, req.(*GetPaymentDetailReq))
+		return srv.(PaymentServer).GetPaymentBySn(ctx, req.(*GetPaymentBySnReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Payment_UpdateTradeState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTradeStateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServer).UpdateTradeState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Payment_UpdateTradeState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServer).UpdateTradeState(ctx, req.(*UpdateTradeStateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Payment_GetPaymentSuccessRefundByOrderSn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentSuccessRefundByOrderSnReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServer).GetPaymentSuccessRefundByOrderSn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Payment_GetPaymentSuccessRefundByOrderSn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServer).GetPaymentSuccessRefundByOrderSn(ctx, req.(*GetPaymentSuccessRefundByOrderSnReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -146,12 +226,20 @@ var Payment_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PaymentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "orderPayment",
-			Handler:    _Payment_OrderPayment_Handler,
+			MethodName: "CreatePayment",
+			Handler:    _Payment_CreatePayment_Handler,
 		},
 		{
-			MethodName: "getPaymentDetail",
-			Handler:    _Payment_GetPaymentDetail_Handler,
+			MethodName: "GetPaymentBySn",
+			Handler:    _Payment_GetPaymentBySn_Handler,
+		},
+		{
+			MethodName: "UpdateTradeState",
+			Handler:    _Payment_UpdateTradeState_Handler,
+		},
+		{
+			MethodName: "GetPaymentSuccessRefundByOrderSn",
+			Handler:    _Payment_GetPaymentSuccessRefundByOrderSn_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

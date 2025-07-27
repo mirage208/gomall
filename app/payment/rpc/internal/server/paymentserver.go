@@ -23,12 +23,26 @@ func NewPaymentServer(svcCtx *svc.ServiceContext) *PaymentServer {
 	}
 }
 
-func (s *PaymentServer) OrderPayment(ctx context.Context, in *payment.OrderPaymentReq) (*payment.OrderPaymentResp, error) {
-	l := logic.NewOrderPaymentLogic(ctx, s.svcCtx)
-	return l.OrderPayment(in)
+// 创建微信支付预处理订单
+func (s *PaymentServer) CreatePayment(ctx context.Context, in *payment.CreatePaymentReq) (*payment.CreatePaymentResp, error) {
+	l := logic.NewCreatePaymentLogic(ctx, s.svcCtx)
+	return l.CreatePayment(in)
 }
 
-func (s *PaymentServer) GetPaymentDetail(ctx context.Context, in *payment.GetPaymentDetailReq) (*payment.GetPaymentDetailResp, error) {
-	l := logic.NewGetPaymentDetailLogic(ctx, s.svcCtx)
-	return l.GetPaymentDetail(in)
+// 根据sn查询流水记录
+func (s *PaymentServer) GetPaymentBySn(ctx context.Context, in *payment.GetPaymentBySnReq) (*payment.GetPaymentBySnResp, error) {
+	l := logic.NewGetPaymentBySnLogic(ctx, s.svcCtx)
+	return l.GetPaymentBySn(in)
+}
+
+// 更新交易状态
+func (s *PaymentServer) UpdateTradeState(ctx context.Context, in *payment.UpdateTradeStateReq) (*payment.UpdateTradeStateResp, error) {
+	l := logic.NewUpdateTradeStateLogic(ctx, s.svcCtx)
+	return l.UpdateTradeState(in)
+}
+
+// 根据订单sn查询流水记录
+func (s *PaymentServer) GetPaymentSuccessRefundByOrderSn(ctx context.Context, in *payment.GetPaymentSuccessRefundByOrderSnReq) (*payment.GetPaymentSuccessRefundByOrderSnResp, error) {
+	l := logic.NewGetPaymentSuccessRefundByOrderSnLogic(ctx, s.svcCtx)
+	return l.GetPaymentSuccessRefundByOrderSn(in)
 }

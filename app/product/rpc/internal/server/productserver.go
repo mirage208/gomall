@@ -23,117 +23,22 @@ func NewProductServer(svcCtx *svc.ServiceContext) *ProductServer {
 	}
 }
 
-// commonProduct
-func (s *ProductServer) Carousel(ctx context.Context, in *product.CarouselReq) (*product.CarouselResp, error) {
-	l := logic.NewCarouselLogic(ctx, s.svcCtx)
-	return l.Carousel(in)
+func (s *ProductServer) Create(ctx context.Context, in *product.CreateRequest) (*product.CreateResponse, error) {
+	l := logic.NewCreateLogic(ctx, s.svcCtx)
+	return l.Create(in)
 }
 
-func (s *ProductServer) CategoryList(ctx context.Context, in *product.CategoryListReq) (*product.CategoryListResp, error) {
-	l := logic.NewCategoryListLogic(ctx, s.svcCtx)
-	return l.CategoryList(in)
+func (s *ProductServer) Update(ctx context.Context, in *product.UpdateRequest) (*product.UpdateResponse, error) {
+	l := logic.NewUpdateLogic(ctx, s.svcCtx)
+	return l.Update(in)
 }
 
-func (s *ProductServer) Recommend(ctx context.Context, in *product.RecommendReq) (*product.RecommendResp, error) {
-	l := logic.NewRecommendLogic(ctx, s.svcCtx)
-	return l.Recommend(in)
+func (s *ProductServer) Remove(ctx context.Context, in *product.RemoveRequest) (*product.RemoveResponse, error) {
+	l := logic.NewRemoveLogic(ctx, s.svcCtx)
+	return l.Remove(in)
 }
 
-func (s *ProductServer) SearchProduct(ctx context.Context, in *product.SearchProductReq) (*product.SearchProductResp, error) {
-	l := logic.NewSearchProductLogic(ctx, s.svcCtx)
-	return l.SearchProduct(in)
-}
-
-func (s *ProductServer) CategoryProductList(ctx context.Context, in *product.CategoryProductListReq) (*product.CategoryProductListResp, error) {
-	l := logic.NewCategoryProductListLogic(ctx, s.svcCtx)
-	return l.CategoryProductList(in)
-}
-
-func (s *ProductServer) ProductDetail(ctx context.Context, in *product.ProductDetailReq) (*product.ProductDetailResp, error) {
-	l := logic.NewProductDetailLogic(ctx, s.svcCtx)
-	return l.ProductDetail(in)
-}
-
-func (s *ProductServer) ProductCommentList(ctx context.Context, in *product.ProductCommentListReq) (*product.ProductCommentListResp, error) {
-	l := logic.NewProductCommentListLogic(ctx, s.svcCtx)
-	return l.ProductCommentList(in)
-}
-
-// storeProduct
-func (s *ProductServer) CreateProduct(ctx context.Context, in *product.CreateProductReq) (*product.CreateProductResp, error) {
-	l := logic.NewCreateProductLogic(ctx, s.svcCtx)
-	return l.CreateProduct(in)
-}
-
-func (s *ProductServer) ShelfProduct(ctx context.Context, in *product.ShelfProductReq) (*product.ShelfProductResp, error) {
-	l := logic.NewShelfProductLogic(ctx, s.svcCtx)
-	return l.ShelfProduct(in)
-}
-
-func (s *ProductServer) UpdateProduct(ctx context.Context, in *product.UpdateProductReq) (*product.UpdateProductResp, error) {
-	l := logic.NewUpdateProductLogic(ctx, s.svcCtx)
-	return l.UpdateProduct(in)
-}
-
-func (s *ProductServer) SoldoutProduct(ctx context.Context, in *product.SoldoutProductReq) (*product.SoldoutProductResp, error) {
-	l := logic.NewSoldoutProductLogic(ctx, s.svcCtx)
-	return l.SoldoutProduct(in)
-}
-
-func (s *ProductServer) DeleteProduct(ctx context.Context, in *product.DeleteProductReq) (*product.DeleteProductResp, error) {
-	l := logic.NewDeleteProductLogic(ctx, s.svcCtx)
-	return l.DeleteProduct(in)
-}
-
-func (s *ProductServer) CreateSeckill(ctx context.Context, in *product.CreateSeckillReq) (*product.CreateSeckillResp, error) {
-	l := logic.NewCreateSeckillLogic(ctx, s.svcCtx)
-	return l.CreateSeckill(in)
-}
-
-func (s *ProductServer) DeleteSeckill(ctx context.Context, in *product.DeleteSeckillReq) (*product.DeleteSeckillResp, error) {
-	l := logic.NewDeleteSeckillLogic(ctx, s.svcCtx)
-	return l.DeleteSeckill(in)
-}
-
-// userProduct
-func (s *ProductServer) CreateCollectProduct(ctx context.Context, in *product.CreateCollectProductReq) (*product.CreateCollectProductResp, error) {
-	l := logic.NewCreateCollectProductLogic(ctx, s.svcCtx)
-	return l.CreateCollectProduct(in)
-}
-
-func (s *ProductServer) CollectProductList(ctx context.Context, in *product.CollectProductListReq) (*product.CollectProductListResp, error) {
-	l := logic.NewCollectProductListLogic(ctx, s.svcCtx)
-	return l.CollectProductList(in)
-}
-
-func (s *ProductServer) DeleteCollectProduct(ctx context.Context, in *product.DeleteCollectProductReq) (*product.DeleteCollectProductResp, error) {
-	l := logic.NewDeleteCollectProductLogic(ctx, s.svcCtx)
-	return l.DeleteCollectProduct(in)
-}
-
-// seckillProduct
-func (s *ProductServer) SeckillList(ctx context.Context, in *product.SeckillListReq) (*product.SeckillListResp, error) {
-	l := logic.NewSeckillListLogic(ctx, s.svcCtx)
-	return l.SeckillList(in)
-}
-
-func (s *ProductServer) SeckillDetail(ctx context.Context, in *product.SeckillDetailReq) (*product.SeckillDetailResp, error) {
-	l := logic.NewSeckillDetailLogic(ctx, s.svcCtx)
-	return l.SeckillDetail(in)
-}
-
-// others
-func (s *ProductServer) CheckProductExists(ctx context.Context, in *product.CheckProductExistsReq) (*product.CheckProductExistsResp, error) {
-	l := logic.NewCheckProductExistsLogic(ctx, s.svcCtx)
-	return l.CheckProductExists(in)
-}
-
-func (s *ProductServer) CheckSeckillExists(ctx context.Context, in *product.CheckSeckillExistsReq) (*product.CheckSeckillExistsResp, error) {
-	l := logic.NewCheckSeckillExistsLogic(ctx, s.svcCtx)
-	return l.CheckSeckillExists(in)
-}
-
-func (s *ProductServer) GetProductListByID(ctx context.Context, in *product.GetProductListByIDReq) (*product.GetProductListByIDResp, error) {
-	l := logic.NewGetProductListByIDLogic(ctx, s.svcCtx)
-	return l.GetProductListByID(in)
+func (s *ProductServer) Detail(ctx context.Context, in *product.DetailRequest) (*product.DetailResponse, error) {
+	l := logic.NewDetailLogic(ctx, s.svcCtx)
+	return l.Detail(in)
 }

@@ -1,13 +1,6 @@
 Name: user.rpc
-ListenOn: 0.0.0.0:9001
+ListenOn: 0.0.0.0:8080
 Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: user.rpc
-
-# RPC Metrics配置
-DevServer:
-  Enabled: true
-  Port: 6011
-  MetricsPath: /metrics
-  EnableMetrics: true

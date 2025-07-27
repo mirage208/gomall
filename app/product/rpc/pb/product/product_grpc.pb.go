@@ -19,61 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Product_Carousel_FullMethodName             = "/product.product/carousel"
-	Product_CategoryList_FullMethodName         = "/product.product/categoryList"
-	Product_Recommend_FullMethodName            = "/product.product/recommend"
-	Product_SearchProduct_FullMethodName        = "/product.product/searchProduct"
-	Product_CategoryProductList_FullMethodName  = "/product.product/categoryProductList"
-	Product_ProductDetail_FullMethodName        = "/product.product/productDetail"
-	Product_ProductCommentList_FullMethodName   = "/product.product/productCommentList"
-	Product_CreateProduct_FullMethodName        = "/product.product/createProduct"
-	Product_ShelfProduct_FullMethodName         = "/product.product/shelfProduct"
-	Product_UpdateProduct_FullMethodName        = "/product.product/updateProduct"
-	Product_SoldoutProduct_FullMethodName       = "/product.product/soldoutProduct"
-	Product_DeleteProduct_FullMethodName        = "/product.product/deleteProduct"
-	Product_CreateSeckill_FullMethodName        = "/product.product/createSeckill"
-	Product_DeleteSeckill_FullMethodName        = "/product.product/deleteSeckill"
-	Product_CreateCollectProduct_FullMethodName = "/product.product/createCollectProduct"
-	Product_CollectProductList_FullMethodName   = "/product.product/collectProductList"
-	Product_DeleteCollectProduct_FullMethodName = "/product.product/deleteCollectProduct"
-	Product_SeckillList_FullMethodName          = "/product.product/seckillList"
-	Product_SeckillDetail_FullMethodName        = "/product.product/seckillDetail"
-	Product_CheckProductExists_FullMethodName   = "/product.product/checkProductExists"
-	Product_CheckSeckillExists_FullMethodName   = "/product.product/checkSeckillExists"
-	Product_GetProductListByID_FullMethodName   = "/product.product/getProductListByID"
+	Product_Create_FullMethodName = "/product.Product/Create"
+	Product_Update_FullMethodName = "/product.Product/Update"
+	Product_Remove_FullMethodName = "/product.Product/Remove"
+	Product_Detail_FullMethodName = "/product.Product/Detail"
 )
 
 // ProductClient is the client API for Product service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductClient interface {
-	// commonProduct
-	Carousel(ctx context.Context, in *CarouselReq, opts ...grpc.CallOption) (*CarouselResp, error)
-	CategoryList(ctx context.Context, in *CategoryListReq, opts ...grpc.CallOption) (*CategoryListResp, error)
-	Recommend(ctx context.Context, in *RecommendReq, opts ...grpc.CallOption) (*RecommendResp, error)
-	SearchProduct(ctx context.Context, in *SearchProductReq, opts ...grpc.CallOption) (*SearchProductResp, error)
-	CategoryProductList(ctx context.Context, in *CategoryProductListReq, opts ...grpc.CallOption) (*CategoryProductListResp, error)
-	ProductDetail(ctx context.Context, in *ProductDetailReq, opts ...grpc.CallOption) (*ProductDetailResp, error)
-	ProductCommentList(ctx context.Context, in *ProductCommentListReq, opts ...grpc.CallOption) (*ProductCommentListResp, error)
-	// storeProduct
-	CreateProduct(ctx context.Context, in *CreateProductReq, opts ...grpc.CallOption) (*CreateProductResp, error)
-	ShelfProduct(ctx context.Context, in *ShelfProductReq, opts ...grpc.CallOption) (*ShelfProductResp, error)
-	UpdateProduct(ctx context.Context, in *UpdateProductReq, opts ...grpc.CallOption) (*UpdateProductResp, error)
-	SoldoutProduct(ctx context.Context, in *SoldoutProductReq, opts ...grpc.CallOption) (*SoldoutProductResp, error)
-	DeleteProduct(ctx context.Context, in *DeleteProductReq, opts ...grpc.CallOption) (*DeleteProductResp, error)
-	CreateSeckill(ctx context.Context, in *CreateSeckillReq, opts ...grpc.CallOption) (*CreateSeckillResp, error)
-	DeleteSeckill(ctx context.Context, in *DeleteSeckillReq, opts ...grpc.CallOption) (*DeleteSeckillResp, error)
-	// userProduct
-	CreateCollectProduct(ctx context.Context, in *CreateCollectProductReq, opts ...grpc.CallOption) (*CreateCollectProductResp, error)
-	CollectProductList(ctx context.Context, in *CollectProductListReq, opts ...grpc.CallOption) (*CollectProductListResp, error)
-	DeleteCollectProduct(ctx context.Context, in *DeleteCollectProductReq, opts ...grpc.CallOption) (*DeleteCollectProductResp, error)
-	// seckillProduct
-	SeckillList(ctx context.Context, in *SeckillListReq, opts ...grpc.CallOption) (*SeckillListResp, error)
-	SeckillDetail(ctx context.Context, in *SeckillDetailReq, opts ...grpc.CallOption) (*SeckillDetailResp, error)
-	// others
-	CheckProductExists(ctx context.Context, in *CheckProductExistsReq, opts ...grpc.CallOption) (*CheckProductExistsResp, error)
-	CheckSeckillExists(ctx context.Context, in *CheckSeckillExistsReq, opts ...grpc.CallOption) (*CheckSeckillExistsResp, error)
-	GetProductListByID(ctx context.Context, in *GetProductListByIDReq, opts ...grpc.CallOption) (*GetProductListByIDResp, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error)
+	Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
 }
 
 type productClient struct {
@@ -84,220 +43,40 @@ func NewProductClient(cc grpc.ClientConnInterface) ProductClient {
 	return &productClient{cc}
 }
 
-func (c *productClient) Carousel(ctx context.Context, in *CarouselReq, opts ...grpc.CallOption) (*CarouselResp, error) {
+func (c *productClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CarouselResp)
-	err := c.cc.Invoke(ctx, Product_Carousel_FullMethodName, in, out, cOpts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, Product_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productClient) CategoryList(ctx context.Context, in *CategoryListReq, opts ...grpc.CallOption) (*CategoryListResp, error) {
+func (c *productClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CategoryListResp)
-	err := c.cc.Invoke(ctx, Product_CategoryList_FullMethodName, in, out, cOpts...)
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, Product_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productClient) Recommend(ctx context.Context, in *RecommendReq, opts ...grpc.CallOption) (*RecommendResp, error) {
+func (c *productClient) Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RecommendResp)
-	err := c.cc.Invoke(ctx, Product_Recommend_FullMethodName, in, out, cOpts...)
+	out := new(RemoveResponse)
+	err := c.cc.Invoke(ctx, Product_Remove_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productClient) SearchProduct(ctx context.Context, in *SearchProductReq, opts ...grpc.CallOption) (*SearchProductResp, error) {
+func (c *productClient) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SearchProductResp)
-	err := c.cc.Invoke(ctx, Product_SearchProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CategoryProductList(ctx context.Context, in *CategoryProductListReq, opts ...grpc.CallOption) (*CategoryProductListResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CategoryProductListResp)
-	err := c.cc.Invoke(ctx, Product_CategoryProductList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) ProductDetail(ctx context.Context, in *ProductDetailReq, opts ...grpc.CallOption) (*ProductDetailResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProductDetailResp)
-	err := c.cc.Invoke(ctx, Product_ProductDetail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) ProductCommentList(ctx context.Context, in *ProductCommentListReq, opts ...grpc.CallOption) (*ProductCommentListResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProductCommentListResp)
-	err := c.cc.Invoke(ctx, Product_ProductCommentList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CreateProduct(ctx context.Context, in *CreateProductReq, opts ...grpc.CallOption) (*CreateProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateProductResp)
-	err := c.cc.Invoke(ctx, Product_CreateProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) ShelfProduct(ctx context.Context, in *ShelfProductReq, opts ...grpc.CallOption) (*ShelfProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ShelfProductResp)
-	err := c.cc.Invoke(ctx, Product_ShelfProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) UpdateProduct(ctx context.Context, in *UpdateProductReq, opts ...grpc.CallOption) (*UpdateProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateProductResp)
-	err := c.cc.Invoke(ctx, Product_UpdateProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) SoldoutProduct(ctx context.Context, in *SoldoutProductReq, opts ...grpc.CallOption) (*SoldoutProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SoldoutProductResp)
-	err := c.cc.Invoke(ctx, Product_SoldoutProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) DeleteProduct(ctx context.Context, in *DeleteProductReq, opts ...grpc.CallOption) (*DeleteProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteProductResp)
-	err := c.cc.Invoke(ctx, Product_DeleteProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CreateSeckill(ctx context.Context, in *CreateSeckillReq, opts ...grpc.CallOption) (*CreateSeckillResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateSeckillResp)
-	err := c.cc.Invoke(ctx, Product_CreateSeckill_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) DeleteSeckill(ctx context.Context, in *DeleteSeckillReq, opts ...grpc.CallOption) (*DeleteSeckillResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteSeckillResp)
-	err := c.cc.Invoke(ctx, Product_DeleteSeckill_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CreateCollectProduct(ctx context.Context, in *CreateCollectProductReq, opts ...grpc.CallOption) (*CreateCollectProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateCollectProductResp)
-	err := c.cc.Invoke(ctx, Product_CreateCollectProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CollectProductList(ctx context.Context, in *CollectProductListReq, opts ...grpc.CallOption) (*CollectProductListResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CollectProductListResp)
-	err := c.cc.Invoke(ctx, Product_CollectProductList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) DeleteCollectProduct(ctx context.Context, in *DeleteCollectProductReq, opts ...grpc.CallOption) (*DeleteCollectProductResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteCollectProductResp)
-	err := c.cc.Invoke(ctx, Product_DeleteCollectProduct_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) SeckillList(ctx context.Context, in *SeckillListReq, opts ...grpc.CallOption) (*SeckillListResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SeckillListResp)
-	err := c.cc.Invoke(ctx, Product_SeckillList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) SeckillDetail(ctx context.Context, in *SeckillDetailReq, opts ...grpc.CallOption) (*SeckillDetailResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SeckillDetailResp)
-	err := c.cc.Invoke(ctx, Product_SeckillDetail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CheckProductExists(ctx context.Context, in *CheckProductExistsReq, opts ...grpc.CallOption) (*CheckProductExistsResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckProductExistsResp)
-	err := c.cc.Invoke(ctx, Product_CheckProductExists_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) CheckSeckillExists(ctx context.Context, in *CheckSeckillExistsReq, opts ...grpc.CallOption) (*CheckSeckillExistsResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckSeckillExistsResp)
-	err := c.cc.Invoke(ctx, Product_CheckSeckillExists_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) GetProductListByID(ctx context.Context, in *GetProductListByIDReq, opts ...grpc.CallOption) (*GetProductListByIDResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetProductListByIDResp)
-	err := c.cc.Invoke(ctx, Product_GetProductListByID_FullMethodName, in, out, cOpts...)
+	out := new(DetailResponse)
+	err := c.cc.Invoke(ctx, Product_Detail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -308,33 +87,10 @@ func (c *productClient) GetProductListByID(ctx context.Context, in *GetProductLi
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility.
 type ProductServer interface {
-	// commonProduct
-	Carousel(context.Context, *CarouselReq) (*CarouselResp, error)
-	CategoryList(context.Context, *CategoryListReq) (*CategoryListResp, error)
-	Recommend(context.Context, *RecommendReq) (*RecommendResp, error)
-	SearchProduct(context.Context, *SearchProductReq) (*SearchProductResp, error)
-	CategoryProductList(context.Context, *CategoryProductListReq) (*CategoryProductListResp, error)
-	ProductDetail(context.Context, *ProductDetailReq) (*ProductDetailResp, error)
-	ProductCommentList(context.Context, *ProductCommentListReq) (*ProductCommentListResp, error)
-	// storeProduct
-	CreateProduct(context.Context, *CreateProductReq) (*CreateProductResp, error)
-	ShelfProduct(context.Context, *ShelfProductReq) (*ShelfProductResp, error)
-	UpdateProduct(context.Context, *UpdateProductReq) (*UpdateProductResp, error)
-	SoldoutProduct(context.Context, *SoldoutProductReq) (*SoldoutProductResp, error)
-	DeleteProduct(context.Context, *DeleteProductReq) (*DeleteProductResp, error)
-	CreateSeckill(context.Context, *CreateSeckillReq) (*CreateSeckillResp, error)
-	DeleteSeckill(context.Context, *DeleteSeckillReq) (*DeleteSeckillResp, error)
-	// userProduct
-	CreateCollectProduct(context.Context, *CreateCollectProductReq) (*CreateCollectProductResp, error)
-	CollectProductList(context.Context, *CollectProductListReq) (*CollectProductListResp, error)
-	DeleteCollectProduct(context.Context, *DeleteCollectProductReq) (*DeleteCollectProductResp, error)
-	// seckillProduct
-	SeckillList(context.Context, *SeckillListReq) (*SeckillListResp, error)
-	SeckillDetail(context.Context, *SeckillDetailReq) (*SeckillDetailResp, error)
-	// others
-	CheckProductExists(context.Context, *CheckProductExistsReq) (*CheckProductExistsResp, error)
-	CheckSeckillExists(context.Context, *CheckSeckillExistsReq) (*CheckSeckillExistsResp, error)
-	GetProductListByID(context.Context, *GetProductListByIDReq) (*GetProductListByIDResp, error)
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	Remove(context.Context, *RemoveRequest) (*RemoveResponse, error)
+	Detail(context.Context, *DetailRequest) (*DetailResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -345,71 +101,17 @@ type ProductServer interface {
 // pointer dereference when methods are called.
 type UnimplementedProductServer struct{}
 
-func (UnimplementedProductServer) Carousel(context.Context, *CarouselReq) (*CarouselResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Carousel not implemented")
+func (UnimplementedProductServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedProductServer) CategoryList(context.Context, *CategoryListReq) (*CategoryListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
+func (UnimplementedProductServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedProductServer) Recommend(context.Context, *RecommendReq) (*RecommendResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Recommend not implemented")
+func (UnimplementedProductServer) Remove(context.Context, *RemoveRequest) (*RemoveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Remove not implemented")
 }
-func (UnimplementedProductServer) SearchProduct(context.Context, *SearchProductReq) (*SearchProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchProduct not implemented")
-}
-func (UnimplementedProductServer) CategoryProductList(context.Context, *CategoryProductListReq) (*CategoryProductListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CategoryProductList not implemented")
-}
-func (UnimplementedProductServer) ProductDetail(context.Context, *ProductDetailReq) (*ProductDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProductDetail not implemented")
-}
-func (UnimplementedProductServer) ProductCommentList(context.Context, *ProductCommentListReq) (*ProductCommentListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProductCommentList not implemented")
-}
-func (UnimplementedProductServer) CreateProduct(context.Context, *CreateProductReq) (*CreateProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
-}
-func (UnimplementedProductServer) ShelfProduct(context.Context, *ShelfProductReq) (*ShelfProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShelfProduct not implemented")
-}
-func (UnimplementedProductServer) UpdateProduct(context.Context, *UpdateProductReq) (*UpdateProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
-}
-func (UnimplementedProductServer) SoldoutProduct(context.Context, *SoldoutProductReq) (*SoldoutProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SoldoutProduct not implemented")
-}
-func (UnimplementedProductServer) DeleteProduct(context.Context, *DeleteProductReq) (*DeleteProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
-}
-func (UnimplementedProductServer) CreateSeckill(context.Context, *CreateSeckillReq) (*CreateSeckillResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateSeckill not implemented")
-}
-func (UnimplementedProductServer) DeleteSeckill(context.Context, *DeleteSeckillReq) (*DeleteSeckillResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteSeckill not implemented")
-}
-func (UnimplementedProductServer) CreateCollectProduct(context.Context, *CreateCollectProductReq) (*CreateCollectProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCollectProduct not implemented")
-}
-func (UnimplementedProductServer) CollectProductList(context.Context, *CollectProductListReq) (*CollectProductListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CollectProductList not implemented")
-}
-func (UnimplementedProductServer) DeleteCollectProduct(context.Context, *DeleteCollectProductReq) (*DeleteCollectProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCollectProduct not implemented")
-}
-func (UnimplementedProductServer) SeckillList(context.Context, *SeckillListReq) (*SeckillListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SeckillList not implemented")
-}
-func (UnimplementedProductServer) SeckillDetail(context.Context, *SeckillDetailReq) (*SeckillDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SeckillDetail not implemented")
-}
-func (UnimplementedProductServer) CheckProductExists(context.Context, *CheckProductExistsReq) (*CheckProductExistsResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckProductExists not implemented")
-}
-func (UnimplementedProductServer) CheckSeckillExists(context.Context, *CheckSeckillExistsReq) (*CheckSeckillExistsResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckSeckillExists not implemented")
-}
-func (UnimplementedProductServer) GetProductListByID(context.Context, *GetProductListByIDReq) (*GetProductListByIDResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductListByID not implemented")
+func (UnimplementedProductServer) Detail(context.Context, *DetailRequest) (*DetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Detail not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 func (UnimplementedProductServer) testEmbeddedByValue()                 {}
@@ -432,398 +134,74 @@ func RegisterProductServer(s grpc.ServiceRegistrar, srv ProductServer) {
 	s.RegisterService(&Product_ServiceDesc, srv)
 }
 
-func _Product_Carousel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CarouselReq)
+func _Product_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).Carousel(ctx, in)
+		return srv.(ProductServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_Carousel_FullMethodName,
+		FullMethod: Product_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).Carousel(ctx, req.(*CarouselReq))
+		return srv.(ProductServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryListReq)
+func _Product_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).CategoryList(ctx, in)
+		return srv.(ProductServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_CategoryList_FullMethodName,
+		FullMethod: Product_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CategoryList(ctx, req.(*CategoryListReq))
+		return srv.(ProductServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_Recommend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RecommendReq)
+func _Product_Remove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).Recommend(ctx, in)
+		return srv.(ProductServer).Remove(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_Recommend_FullMethodName,
+		FullMethod: Product_Remove_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).Recommend(ctx, req.(*RecommendReq))
+		return srv.(ProductServer).Remove(ctx, req.(*RemoveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_SearchProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchProductReq)
+func _Product_Detail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).SearchProduct(ctx, in)
+		return srv.(ProductServer).Detail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_SearchProduct_FullMethodName,
+		FullMethod: Product_Detail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).SearchProduct(ctx, req.(*SearchProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CategoryProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryProductListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CategoryProductList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CategoryProductList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CategoryProductList(ctx, req.(*CategoryProductListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_ProductDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductDetailReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).ProductDetail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_ProductDetail_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).ProductDetail(ctx, req.(*ProductDetailReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_ProductCommentList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductCommentListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).ProductCommentList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_ProductCommentList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).ProductCommentList(ctx, req.(*ProductCommentListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CreateProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CreateProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CreateProduct(ctx, req.(*CreateProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_ShelfProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ShelfProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).ShelfProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_ShelfProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).ShelfProduct(ctx, req.(*ShelfProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).UpdateProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_UpdateProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).UpdateProduct(ctx, req.(*UpdateProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_SoldoutProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SoldoutProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).SoldoutProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_SoldoutProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).SoldoutProduct(ctx, req.(*SoldoutProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).DeleteProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_DeleteProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).DeleteProduct(ctx, req.(*DeleteProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CreateSeckill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateSeckillReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CreateSeckill(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CreateSeckill_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CreateSeckill(ctx, req.(*CreateSeckillReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_DeleteSeckill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteSeckillReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).DeleteSeckill(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_DeleteSeckill_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).DeleteSeckill(ctx, req.(*DeleteSeckillReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CreateCollectProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCollectProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CreateCollectProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CreateCollectProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CreateCollectProduct(ctx, req.(*CreateCollectProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CollectProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CollectProductListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CollectProductList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CollectProductList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CollectProductList(ctx, req.(*CollectProductListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_DeleteCollectProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteCollectProductReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).DeleteCollectProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_DeleteCollectProduct_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).DeleteCollectProduct(ctx, req.(*DeleteCollectProductReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_SeckillList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SeckillListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).SeckillList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_SeckillList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).SeckillList(ctx, req.(*SeckillListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_SeckillDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SeckillDetailReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).SeckillDetail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_SeckillDetail_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).SeckillDetail(ctx, req.(*SeckillDetailReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CheckProductExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckProductExistsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CheckProductExists(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CheckProductExists_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CheckProductExists(ctx, req.(*CheckProductExistsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_CheckSeckillExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckSeckillExistsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).CheckSeckillExists(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_CheckSeckillExists_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).CheckSeckillExists(ctx, req.(*CheckSeckillExistsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_GetProductListByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductListByIDReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).GetProductListByID(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Product_GetProductListByID_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).GetProductListByID(ctx, req.(*GetProductListByIDReq))
+		return srv.(ProductServer).Detail(ctx, req.(*DetailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -832,96 +210,24 @@ func _Product_GetProductListByID_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Product_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "product.product",
+	ServiceName: "product.Product",
 	HandlerType: (*ProductServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "carousel",
-			Handler:    _Product_Carousel_Handler,
+			MethodName: "Create",
+			Handler:    _Product_Create_Handler,
 		},
 		{
-			MethodName: "categoryList",
-			Handler:    _Product_CategoryList_Handler,
+			MethodName: "Update",
+			Handler:    _Product_Update_Handler,
 		},
 		{
-			MethodName: "recommend",
-			Handler:    _Product_Recommend_Handler,
+			MethodName: "Remove",
+			Handler:    _Product_Remove_Handler,
 		},
 		{
-			MethodName: "searchProduct",
-			Handler:    _Product_SearchProduct_Handler,
-		},
-		{
-			MethodName: "categoryProductList",
-			Handler:    _Product_CategoryProductList_Handler,
-		},
-		{
-			MethodName: "productDetail",
-			Handler:    _Product_ProductDetail_Handler,
-		},
-		{
-			MethodName: "productCommentList",
-			Handler:    _Product_ProductCommentList_Handler,
-		},
-		{
-			MethodName: "createProduct",
-			Handler:    _Product_CreateProduct_Handler,
-		},
-		{
-			MethodName: "shelfProduct",
-			Handler:    _Product_ShelfProduct_Handler,
-		},
-		{
-			MethodName: "updateProduct",
-			Handler:    _Product_UpdateProduct_Handler,
-		},
-		{
-			MethodName: "soldoutProduct",
-			Handler:    _Product_SoldoutProduct_Handler,
-		},
-		{
-			MethodName: "deleteProduct",
-			Handler:    _Product_DeleteProduct_Handler,
-		},
-		{
-			MethodName: "createSeckill",
-			Handler:    _Product_CreateSeckill_Handler,
-		},
-		{
-			MethodName: "deleteSeckill",
-			Handler:    _Product_DeleteSeckill_Handler,
-		},
-		{
-			MethodName: "createCollectProduct",
-			Handler:    _Product_CreateCollectProduct_Handler,
-		},
-		{
-			MethodName: "collectProductList",
-			Handler:    _Product_CollectProductList_Handler,
-		},
-		{
-			MethodName: "deleteCollectProduct",
-			Handler:    _Product_DeleteCollectProduct_Handler,
-		},
-		{
-			MethodName: "seckillList",
-			Handler:    _Product_SeckillList_Handler,
-		},
-		{
-			MethodName: "seckillDetail",
-			Handler:    _Product_SeckillDetail_Handler,
-		},
-		{
-			MethodName: "checkProductExists",
-			Handler:    _Product_CheckProductExists_Handler,
-		},
-		{
-			MethodName: "checkSeckillExists",
-			Handler:    _Product_CheckSeckillExists_Handler,
-		},
-		{
-			MethodName: "getProductListByID",
-			Handler:    _Product_GetProductListByID_Handler,
+			MethodName: "Detail",
+			Handler:    _Product_Detail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

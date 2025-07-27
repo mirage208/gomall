@@ -14,75 +14,58 @@ import (
 )
 
 type (
-	CreateOrderResp        = order.CreateOrderResp
-	CreateProductOrderReq  = order.CreateProductOrderReq
-	CreateSeckillOrderReq  = order.CreateSeckillOrderReq
-	DeleteOrderReq         = order.DeleteOrderReq
-	DeleteOrderResp        = order.DeleteOrderResp
-	GetOrderOnlyDetailReq  = order.GetOrderOnlyDetailReq
-	GetOrderOnlyDetailResp = order.GetOrderOnlyDetailResp
-	OrderDetailReq         = order.OrderDetailReq
-	OrderDetailResp        = order.OrderDetailResp
-	OrderListReq           = order.OrderListReq
-	OrderListResp          = order.OrderListResp
-	SmallOrder             = order.SmallOrder
-	UpdateOrderStatusReq   = order.UpdateOrderStatusReq
-	UpdateOrderStatusResp  = order.UpdateOrderStatusResp
+	CreateOrderReq            = order.CreateOrderReq
+	CreateOrderResp           = order.CreateOrderResp
+	Order                     = order.Order
+	OrderDetailReq            = order.OrderDetailReq
+	OrderDetailResp           = order.OrderDetailResp
+	UpdateOrderTradeStateReq  = order.UpdateOrderTradeStateReq
+	UpdateOrderTradeStateResp = order.UpdateOrderTradeStateResp
+	UserOrderListReq          = order.UserOrderListReq
+	UserOrderListResp         = order.UserOrderListResp
 
-	Order interface {
-		CreateProductOrder(ctx context.Context, in *CreateProductOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error)
-		CreateSeckillOrder(ctx context.Context, in *CreateSeckillOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error)
-		OrderList(ctx context.Context, in *OrderListReq, opts ...grpc.CallOption) (*OrderListResp, error)
+	OrderZrpcClient interface {
+		// 下订单
+		CreateOrder(ctx context.Context, in *CreateOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error)
+		// 订单详情
 		OrderDetail(ctx context.Context, in *OrderDetailReq, opts ...grpc.CallOption) (*OrderDetailResp, error)
-		DeleteOrder(ctx context.Context, in *DeleteOrderReq, opts ...grpc.CallOption) (*DeleteOrderResp, error)
-		UpdateOrderStatus(ctx context.Context, in *UpdateOrderStatusReq, opts ...grpc.CallOption) (*UpdateOrderStatusResp, error)
-		// other
-		GetOrderOnlyDetail(ctx context.Context, in *GetOrderOnlyDetailReq, opts ...grpc.CallOption) (*GetOrderOnlyDetailResp, error)
+		// 更新订单状态
+		UpdateOrderTradeState(ctx context.Context, in *UpdateOrderTradeStateReq, opts ...grpc.CallOption) (*UpdateOrderTradeStateResp, error)
+		// 用户订单
+		UserOrderList(ctx context.Context, in *UserOrderListReq, opts ...grpc.CallOption) (*UserOrderListResp, error)
 	}
 
-	defaultOrder struct {
+	defaultOrderZrpcClient struct {
 		cli zrpc.Client
 	}
 )
 
-func NewOrder(cli zrpc.Client) Order {
-	return &defaultOrder{
+func NewOrderZrpcClient(cli zrpc.Client) OrderZrpcClient {
+	return &defaultOrderZrpcClient{
 		cli: cli,
 	}
 }
 
-func (m *defaultOrder) CreateProductOrder(ctx context.Context, in *CreateProductOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error) {
+// 下订单
+func (m *defaultOrderZrpcClient) CreateOrder(ctx context.Context, in *CreateOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error) {
 	client := order.NewOrderClient(m.cli.Conn())
-	return client.CreateProductOrder(ctx, in, opts...)
+	return client.CreateOrder(ctx, in, opts...)
 }
 
-func (m *defaultOrder) CreateSeckillOrder(ctx context.Context, in *CreateSeckillOrderReq, opts ...grpc.CallOption) (*CreateOrderResp, error) {
-	client := order.NewOrderClient(m.cli.Conn())
-	return client.CreateSeckillOrder(ctx, in, opts...)
-}
-
-func (m *defaultOrder) OrderList(ctx context.Context, in *OrderListReq, opts ...grpc.CallOption) (*OrderListResp, error) {
-	client := order.NewOrderClient(m.cli.Conn())
-	return client.OrderList(ctx, in, opts...)
-}
-
-func (m *defaultOrder) OrderDetail(ctx context.Context, in *OrderDetailReq, opts ...grpc.CallOption) (*OrderDetailResp, error) {
+// 订单详情
+func (m *defaultOrderZrpcClient) OrderDetail(ctx context.Context, in *OrderDetailReq, opts ...grpc.CallOption) (*OrderDetailResp, error) {
 	client := order.NewOrderClient(m.cli.Conn())
 	return client.OrderDetail(ctx, in, opts...)
 }
 
-func (m *defaultOrder) DeleteOrder(ctx context.Context, in *DeleteOrderReq, opts ...grpc.CallOption) (*DeleteOrderResp, error) {
+// 更新订单状态
+func (m *defaultOrderZrpcClient) UpdateOrderTradeState(ctx context.Context, in *UpdateOrderTradeStateReq, opts ...grpc.CallOption) (*UpdateOrderTradeStateResp, error) {
 	client := order.NewOrderClient(m.cli.Conn())
-	return client.DeleteOrder(ctx, in, opts...)
+	return client.UpdateOrderTradeState(ctx, in, opts...)
 }
 
-func (m *defaultOrder) UpdateOrderStatus(ctx context.Context, in *UpdateOrderStatusReq, opts ...grpc.CallOption) (*UpdateOrderStatusResp, error) {
+// 用户订单
+func (m *defaultOrderZrpcClient) UserOrderList(ctx context.Context, in *UserOrderListReq, opts ...grpc.CallOption) (*UserOrderListResp, error) {
 	client := order.NewOrderClient(m.cli.Conn())
-	return client.UpdateOrderStatus(ctx, in, opts...)
-}
-
-// other
-func (m *defaultOrder) GetOrderOnlyDetail(ctx context.Context, in *GetOrderOnlyDetailReq, opts ...grpc.CallOption) (*GetOrderOnlyDetailResp, error) {
-	client := order.NewOrderClient(m.cli.Conn())
-	return client.GetOrderOnlyDetail(ctx, in, opts...)
+	return client.UserOrderList(ctx, in, opts...)
 }

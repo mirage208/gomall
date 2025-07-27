@@ -15,7 +15,7 @@ type RegisterLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-// 用户注册
+// register
 func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RegisterLogic {
 	return &RegisterLogic{
 		Logger: logx.WithContext(ctx),

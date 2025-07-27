@@ -3,186 +3,46 @@
 
 package types
 
-type BasePage struct {
-	Page int64 `json:"page"`
-	Size int64 `json:"size"`
+type CreateRequest struct {
+	Name   string `json:"name"`
+	Desc   string `json:"desc"`
+	Stock  int64  `json:"stock"`
+	Amount int64  `json:"amount"`
+	Status int64  `json:"status"`
 }
 
-type Carousel struct {
-	ProductID int64  `json:"productId"`
-	ImgPath   string `json:"imgPath"`
+type CreateResponse struct {
+	Id int64 `json:"id"`
 }
 
-type Category struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+type DetailRequest struct {
+	Id int64 `json:"id"`
 }
 
-type CategoryProductListReq struct {
-	CategoryID int64  `json:"categoryId"`
-	Sort       string `json:"sort"`
-	BasePage
+type DetailResponse struct {
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Desc   string `json:"desc"`
+	Stock  int64  `json:"stock"`
+	Amount int64  `json:"amount"`
+	Status int64  `json:"status"`
 }
 
-type CategoryProductListResp struct {
-	Products []SmallProduct `json:"products"`
+type RemoveRequest struct {
+	Id int64 `json:"id"`
 }
 
-type CollectProductListResp struct {
-	Products []SmallProduct `json:"products"`
+type RemoveResponse struct {
 }
 
-type Comment struct {
-	ID         int64  `json:"id"`
-	UserID     int64  `json:"userId"`
-	ProductID  int64  `json:"productId"`
-	IsGood     int64  `json:"isGood"`
-	Content    string `json:"content"`
-	AddContent string `json:"addContent"`
+type UpdateRequest struct {
+	Id     int64  `json:"id"`
+	Name   string `json:"name,optional"`
+	Desc   string `json:"desc,optional"`
+	Stock  int64  `json:"stock"`
+	Amount int64  `json:"amount,optional"`
+	Status int64  `json:"status,optional"`
 }
 
-type CreateCollectProductReq struct {
-	ProductID int64 `json:"productId"`
-}
-
-type CreateProductReq struct {
-	CategoryID   int64   `form:"categoryId"`
-	Title        string  `form:"title"`
-	SubTitle     string  `form:"subTitle"`
-	Introduction string  `form:"introduction"`
-	Price        float64 `form:"price"`
-	OnSale       int64   `form:"onSale"`
-	Stock        int64   `form:"stock"`
-	StoreID      int64   `form:"storeId"`
-}
-
-type CreateSeckillProductReq struct {
-	ProductID    int64   `json:"productId"`
-	StoreID      int64   `json:"storeId"`
-	SeckillPrice float64 `json:"seckillPrice"`
-	StockCount   int64   `json:"stockCount"`
-	StartTime    string  `json:"startTime"`
-	Time         int64   `json:"time"`
-}
-
-type DeleteCollectProductReq struct {
-	ProductID int64 `json:"productId"`
-}
-
-type DeleteProductReq struct {
-	ProductIDs []int64 `json:"productIDs"`
-}
-
-type DeleteSeckillProductReq struct {
-	SeckillID int64 `json:"seckillId"`
-}
-
-type GetSeckillDetailReq struct {
-	SeckillID int64 `json:"seckillId"`
-}
-
-type GetSeckillDetailResp struct {
-	SeckillProduct SeckillProduct `json:"seckillProduct"`
-}
-
-type GetSeckillListReq struct {
-	StartTime string `json:"startTime"`
-	Time      int64  `json:"time"`
-}
-
-type GetSeckillListResp struct {
-	SeckillProducts []SmallSeckill `json:"seckillProducts"`
-}
-
-type HomePageCarouselResp struct {
-	Carousels []Carousel `json:"carousels"`
-}
-
-type HomePageCategoryResp struct {
-	CategoryList []Category `json:"categoryList"`
-}
-
-type Product struct {
-	ID            int64   `json:"id"`
-	CategoryID    int64   `json:"categoryId"`
-	Title         string  `json:"title"`
-	SubTitle      string  `json:"subTitle"`
-	Banner        string  `json:"banner"`
-	Introduction  string  `json:"introduction"`
-	Price         float64 `json:"price"`
-	DiscountPrice float64 `json:"discountPrice"`
-	OnSale        int64   `json:"onSale"`
-	SellCount     int64   `json:"sellCount"`
-	CommentCount  int64   `json:"commentCount"`
-	StoreID       int64   `json:"storeId"`
-	BossID        int64   `json:"bossId"`
-}
-
-type ProductDetailReq struct {
-	ProductID int64 `json:"productId"`
-	BasePage
-}
-
-type ProductDetailResp struct {
-	Product  Product   `json:"product"`
-	Comments []Comment `json:"comments"`
-}
-
-type RecommendProductResp struct {
-	Products []SmallProduct `json:"products"`
-}
-
-type SearchProductReq struct {
-	Keyword    string `json:"keyword"`
-	Sort       string `json:"sort"`
-	OnSale     int64  `json:"onSale"`
-	CategoryID int64  `json:"categoryId"`
-	BasePage
-}
-
-type SearchProductResp struct {
-	Products []SmallProduct `json:"products"`
-}
-
-type SeckillProduct struct {
-	Product
-	SeckillPrice float64 `json:"seckillPrice"`
-	StockCount   int64   `json:"stockCount"`
-	StartTime    string  `json:"startTime"`
-	Time         int64   `json:"time"`
-}
-
-type ShelfProductReq struct {
-	ProductIDs []int64 `json:"productIds"`
-}
-
-type SmallProduct struct {
-	ID            int64   `json:"id"`
-	Title         string  `json:"title"`
-	Banner        string  `json:"banner"`
-	Price         float64 `json:"price"`
-	DiscountPrice float64 `json:"discountPrice"`
-}
-
-type SmallSeckill struct {
-	SeckillID    int64   `json:"seckillId"`
-	Title        string  `json:"title"`
-	Banner       string  `json:"banner"`
-	SeckillPrice float64 `json:"seckillPrice"`
-}
-
-type SoldoutProductReq struct {
-	ProductIDs []int64 `json:"productIDs"`
-}
-
-type UpdateProductReq struct {
-	ProductID     int64   `form:"productId"`
-	CategoryID    int64   `form:"categoryId"`
-	Title         string  `form:"title"`
-	SubTitle      string  `form:"subTitle"`
-	Introduction  string  `form:"introduction"`
-	Price         float64 `form:"price"`
-	DiscountPrice float64 `form:"discountPrice"`
-	OnSale        int64   `form:"onSale"`
-	Stock         int64   `form:"stock"`
+type UpdateResponse struct {
 }

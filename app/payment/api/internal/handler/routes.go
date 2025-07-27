@@ -6,7 +6,7 @@ package handler
 import (
 	"net/http"
 
-	payment "github.com/mirage208/gomall/app/payment/api/internal/handler/payment"
+	thirdPayment "github.com/mirage208/gomall/app/payment/api/internal/handler/thirdPayment"
 	"github.com/mirage208/gomall/app/payment/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -14,17 +14,26 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CheckUserState},
-			[]rest.Route{
-				{
-					// 订单付款
-					Method:  http.MethodPost,
-					Path:    "/payment",
-					Handler: payment.OrderPayHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				// third payment：wechat pay callback
+				Method:  http.MethodPost,
+				Path:    "/thirdPayment/thirdPaymentWxPayCallback",
+				Handler: thirdPayment.ThirdPaymentWxPayCallbackHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/payment/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				// third payment：wechat pay
+				Method:  http.MethodPost,
+				Path:    "/thirdPayment/thirdPaymentWxPay",
+				Handler: thirdPayment.ThirdPaymentwxPayHandler(serverCtx),
+			},
+		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/payment/v1"),
 	)

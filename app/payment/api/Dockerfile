@@ -29,4 +29,4 @@ COPY app/payment/api/etc /app/etc
 
 EXPOSE 8004
 
-CMD ["./payment_api", "-f", "etc/payment-api.yaml"]
+CMD ["./payment_api", "-f", "etc/payment.yaml"]

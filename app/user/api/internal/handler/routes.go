@@ -7,8 +7,6 @@ import (
 	"net/http"
 
 	user "github.com/mirage208/gomall/app/user/api/internal/handler/user"
-	userAddress "github.com/mirage208/gomall/app/user/api/internal/handler/userAddress"
-	userInfo "github.com/mirage208/gomall/app/user/api/internal/handler/userInfo"
 	"github.com/mirage208/gomall/app/user/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -18,15 +16,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				// 用户登录
+				// login
 				Method:  http.MethodPost,
-				Path:    "/login",
+				Path:    "/user/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
 			{
-				// 用户注册
+				// register
 				Method:  http.MethodPost,
-				Path:    "/register",
+				Path:    "/user/register",
 				Handler: user.RegisterHandler(serverCtx),
 			},
 		},
@@ -34,109 +32,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CheckUserState},
-			[]rest.Route{
-				{
-					// 用户退出
-					Method:  http.MethodPost,
-					Path:    "/logout",
-					Handler: user.LogoutHandler(serverCtx),
-				},
-				{
-					// 邮箱验证码发送
-					Method:  http.MethodPost,
-					Path:    "/sendcode",
-					Handler: user.SendCodeHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/user/v1"),
-	)
-
-	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CheckUserState},
-			[]rest.Route{
-				{
-					// 添加收货地址
-					Method:  http.MethodPost,
-					Path:    "/address",
-					Handler: userAddress.CreateUserAddressHandler(serverCtx),
-				},
-				{
-					// 用户收货地址列表
-					Method:  http.MethodGet,
-					Path:    "/address",
-					Handler: userAddress.UserAddressListHandler(serverCtx),
-				},
-				{
-					// 更新收货地址
-					Method:  http.MethodPut,
-					Path:    "/address",
-					Handler: userAddress.UpdateUserAddressHandler(serverCtx),
-				},
-				{
-					// 删除收货地址
-					Method:  http.MethodDelete,
-					Path:    "/address",
-					Handler: userAddress.DeleteUserAddressHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/user/v1"),
-	)
-
-	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CheckUserState},
-			[]rest.Route{
-				{
-					// 用户基本信息展示
-					Method:  http.MethodGet,
-					Path:    "/userinfo",
-					Handler: userInfo.UserInfoHandler(serverCtx),
-				},
-				{
-					// 修改用户基本信息
-					Method:  http.MethodPut,
-					Path:    "/userinfo",
-					Handler: userInfo.UpdateUserInfoHandler(serverCtx),
-				},
-				{
-					// 绑定邮箱
-					Method:  http.MethodPost,
-					Path:    "/userinfo/bindemail",
-					Handler: userInfo.BindEmailHandler(serverCtx),
-				},
-				{
-					// 修改邮箱
-					Method:  http.MethodPost,
-					Path:    "/userinfo/email",
-					Handler: userInfo.UpdateEmailHandler(serverCtx),
-				},
-				{
-					// 修改密码
-					Method:  http.MethodPost,
-					Path:    "/userinfo/password",
-					Handler: userInfo.UpdatePasswordHandler(serverCtx),
-				},
-				{
-					// 上传头像
-					Method:  http.MethodPost,
-					Path:    "/userinfo/uploaduserimg",
-					Handler: userInfo.UploadUserImgHandler(serverCtx),
-				},
-				{
-					// 获取账户金额
-					Method:  http.MethodGet,
-					Path:    "/userinfo/usermoney",
-					Handler: userInfo.GetUserMoneyHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				// get user info
+				Method:  http.MethodPost,
+				Path:    "/user/detail",
+				Handler: user.DetailHandler(serverCtx),
+			},
+			{
+				// wechat mini auth
+				Method:  http.MethodPost,
+				Path:    "/user/wxMiniAuth",
+				Handler: user.WxMiniAuthHandler(serverCtx),
+			},
+		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/user/v1"),
 	)

@@ -7,31 +7,24 @@ info (
 	version: "v1"
 )
 
-type JwtAccess {
-	AccessToken  string `json:"accessToken"`
-	AccessExpire int64  `json:"accessExpire"`
-	RefreshAfter int64  `json:"refreshAfter"`
-}
-
 type User {
-	ID           int64  `json:"id"`
-	Mobile       string `json:"mobile"`
-	Username     string `json:"username"`
-	Email        string `json:"email"`
-	Sex          int64  `json:"sex"`
-	HeaderImg    string `json:"headerImg"`
-	Signature    string `json:"signature"`
-	Introduction string `json:"introduction"`
+	Id       int64  `json:"id"`
+	Mobile   string `json:"mobile"`
+	Nickname string `json:"nickname"`
+	Sex      int64  `json:"sex"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
 }
 
 type (
 	RegisterReq {
-		Mobile     string `json:"mobile"`
-		Password   string `json:"password"`
-		RePassword string `json:"rePassword"`
+		Mobile   string `json:"mobile"`
+		Password string `json:"password"`
 	}
 	RegisterResp {
-		JwtAccess JwtAccess `json:"jwtAccess"`
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
 	}
 )
 
@@ -41,209 +34,60 @@ type (
 		Password string `json:"password"`
 	}
 	LoginResp {
-		JwtAccess JwtAccess `json:"jwtAccess"`
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
 	}
 )
 
 type (
-	SendCodeReq {
-		Email string `json:"email"`
+	WXMiniAuthReq {
+		Code          string `json:"code"`
+		IV            string `json:"iv"`
+		EncryptedData string `json:"encryptedData"`
+	}
+	WXMiniAuthResp {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`
+		RefreshAfter int64  `json:"refreshAfter"`
 	}
 )
 
 type (
-	LogoutReq {
-		AccessToken string `json:"accessToken"`
-	}
-)
-
-type (
-	GetUserInfoResp {
+	UserInfoReq  {}
+	UserInfoResp {
 		UserInfo User `json:"userInfo"`
 	}
 )
 
-type (
-	EmailReq {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		Code     string `json:"code"`
-	}
-)
-
-type (
-	UpdateUserInfoReq {
-		Username     string `json:"username"`
-		Sex          int64  `json:"sex"`
-		Signature    string `json:"signature"`
-		Introduction string `json:"introduction"`
-	}
-)
-
-type (
-	UpdatePasswordReq {
-		OldPassword string `json:"oldPassword"`
-		NewPassword string `json:"newPassword"`
-		RePassword  string `json:"rePassword"`
-	}
-)
-
-type (
-	UploadUserImgReq {
-		UserID int64 `form:"userId"`
-	}
-)
-
-type (
-	GetUserMoneyReq {
-		Password string `json:"password"`
-	}
-	GetUserMoneyResp {
-		Money float64 `json:"money"`
-	}
-)
-
-type Address {
-	ID            int64  `json:"id"`
-	IsDefault     int64  `json:"isDefault"`
-	Province      string `json:"province"`
-	City          string `json:"city"`
-	Region        string `json:"region"`
-	DetailAddress string `json:"detailAddress"`
-	Name          string `json:"name"`
-	Phone         string `json:"phone"`
-}
-
-type (
-	UserAddressListResp {
-		List []Address `json:"list"`
-	}
-)
-
-type (
-	CreateUserAddressReq {
-		IsDefault     int64  `json:"isDefault"`
-		Province      string `json:"province"`
-		City          string `json:"city"`
-		Region        string `json:"region"`
-		DetailAddress string `json:"detailAddress"`
-		Name          string `json:"name"`
-		Phone         string `json:"phone"`
-	}
-)
-
-type (
-	UpdateUserAddressReq {
-		ID            int64  `json:"id"`
-		IsDefault     int64  `json:"isDefault"`
-		Province      string `json:"province"`
-		City          string `json:"city"`
-		Region        string `json:"region"`
-		DetailAddress string `json:"detailAddress"`
-		Name          string `json:"name"`
-		Phone         string `json:"phone"`
-	}
-)
-
-type (
-	DeleteUserAddressReq {
-		ID int64 `json:"id"`
-	}
-)
-
-// no need login
+//no need login
 @server (
-	group:  user
 	prefix: user/v1
+	group:  user
 )
-service user-api {
-	@doc "用户注册"
+service user {
+	@doc "register"
 	@handler register
-	post /register (RegisterReq) returns (RegisterResp)
+	post /user/register (RegisterReq) returns (RegisterResp)
 
-	@doc "用户登录"
+	@doc "login"
 	@handler login
-	post /login (LoginReq) returns (LoginResp)
+	post /user/login (LoginReq) returns (LoginResp)
 }
 
-// need login
+//need login
 @server (
-	jwt:        JwtAuth
-	group:      user
-	prefix:     user/v1
-	middleware: CheckUserState
+	prefix: user/v1
+	group:  user
+	jwt:    JwtAuth
 )
-service user-api {
-	@doc "用户退出"
-	@handler logout
-	post /logout (LogoutReq)
+service user {
+	@doc "get user info"
+	@handler detail
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
 
-	@doc "邮箱验证码发送"
-	@handler sendCode
-	post /sendcode (SendCodeReq)
-}
-
-// need login
-// 用户基本信息功能
-@server (
-	jwt:        JwtAuth
-	group:      userInfo
-	prefix:     user/v1
-	middleware: CheckUserState
-)
-service user-api {
-	@doc "绑定邮箱"
-	@handler bindEmail
-	post /userinfo/bindemail (EmailReq)
-
-	@doc "用户基本信息展示"
-	@handler userInfo
-	get /userinfo returns (GetUserInfoResp)
-
-	@doc "修改邮箱"
-	@handler updateEmail
-	post /userinfo/email (EmailReq)
-
-	@doc "修改用户基本信息"
-	@handler updateUserInfo
-	put /userinfo (UpdateUserInfoReq)
-
-	@doc "修改密码"
-	@handler updatePassword
-	post /userinfo/password (UpdatePasswordReq)
-
-	@doc "上传头像"
-	@handler uploadUserImg
-	post /userinfo/uploaduserimg (UploadUserImgReq)
-
-	@doc "获取账户金额"
-	@handler getUserMoney
-	get /userinfo/usermoney (GetUserMoneyReq) returns (GetUserMoneyResp)
-}
-
-// need login
-// 用户收货地址功能
-@server (
-	jwt:        JwtAuth
-	group:      userAddress
-	prefix:     user/v1
-	middleware: CheckUserState
-)
-service user-api {
-	@doc "添加收货地址"
-	@handler createUserAddress
-	post /address (CreateUserAddressReq)
-
-	@doc "用户收货地址列表"
-	@handler userAddressList
-	get /address returns (UserAddressListResp)
-
-	@doc "更新收货地址"
-	@handler updateUserAddress
-	put /address (UpdateUserAddressReq)
-
-	@doc "删除收货地址"
-	@handler deleteUserAddress
-	delete /address (DeleteUserAddressReq)
+	@doc "wechat mini auth"
+	@handler wxMiniAuth
+	post /user/wxMiniAuth (WXMiniAuthReq) returns (WXMiniAuthResp)
 }
 

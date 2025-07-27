@@ -19,715 +19,295 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	User_Register_FullMethodName                  = "/user.user/register"
-	User_Login_FullMethodName                     = "/user.user/login"
-	User_GenerateToken_FullMethodName             = "/user.user/generateToken"
-	User_Logout_FullMethodName                    = "/user.user/logout"
-	User_GetUserInfo_FullMethodName               = "/user.user/getUserInfo"
-	User_UpdateEmail_FullMethodName               = "/user.user/updateEmail"
-	User_UpdatePassword_FullMethodName            = "/user.user/updatePassword"
-	User_UpdateUserInfo_FullMethodName            = "/user.user/updateUserInfo"
-	User_GetUserMoney_FullMethodName              = "/user.user/getUserMoney"
-	User_GetUserAddressList_FullMethodName        = "/user.user/getUserAddressList"
-	User_CreateUserAddress_FullMethodName         = "/user.user/createUserAddress"
-	User_UpdateUserAddress_FullMethodName         = "/user.user/updateUserAddress"
-	User_DeleteUserAddress_FullMethodName         = "/user.user/deleteUserAddress"
-	User_GetUserAddressDetail_FullMethodName      = "/user.user/getUserAddressDetail"
-	User_CheckUserExists_FullMethodName           = "/user.user/checkUserExists"
-	User_CheckUserAndAddressExists_FullMethodName = "/user.user/checkUserAndAddressExists"
-	User_UpdateUserMoney_FullMethodName           = "/user.user/updateUserMoney"
+	Usercenter_Login_FullMethodName                = "/user.usercenter/login"
+	Usercenter_Register_FullMethodName             = "/user.usercenter/register"
+	Usercenter_GetUserInfo_FullMethodName          = "/user.usercenter/getUserInfo"
+	Usercenter_GetUserAuthByAuthKey_FullMethodName = "/user.usercenter/getUserAuthByAuthKey"
+	Usercenter_GetUserAuthByUserId_FullMethodName  = "/user.usercenter/getUserAuthByUserId"
+	Usercenter_GenerateToken_FullMethodName        = "/user.usercenter/generateToken"
 )
 
-// UserClient is the client API for User service.
+// UsercenterClient is the client API for Usercenter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserClient interface {
-	// user
-	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+//
+// service
+type UsercenterClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
-	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
-	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error)
+	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
-	UpdateEmail(ctx context.Context, in *UpdateEmailReq, opts ...grpc.CallOption) (*UpdateEmailResp, error)
-	UpdatePassword(ctx context.Context, in *UpdatePasswordReq, opts ...grpc.CallOption) (*UpdatePasswordResp, error)
-	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
-	GetUserMoney(ctx context.Context, in *GetUserMoneyReq, opts ...grpc.CallOption) (*GetUserMoneyResp, error)
-	// userAddress
-	GetUserAddressList(ctx context.Context, in *GetUserAddressListReq, opts ...grpc.CallOption) (*GetUserAddressListResp, error)
-	CreateUserAddress(ctx context.Context, in *CreateUserAddressReq, opts ...grpc.CallOption) (*CreateUserAddressResp, error)
-	UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error)
-	DeleteUserAddress(ctx context.Context, in *DeleteUserAddressReq, opts ...grpc.CallOption) (*DeleteUserAddressResp, error)
-	GetUserAddressDetail(ctx context.Context, in *GetUserAddressDetailReq, opts ...grpc.CallOption) (*GetUserAddressDetailResp, error)
-	// other
-	CheckUserExists(ctx context.Context, in *CheckUserExistsReq, opts ...grpc.CallOption) (*CheckUserExistsResp, error)
-	CheckUserAndAddressExists(ctx context.Context, in *CheckUserAndAddressExistsReq, opts ...grpc.CallOption) (*CheckUserAndAddressExistsResp, error)
-	UpdateUserMoney(ctx context.Context, in *UpdateUserMoneyReq, opts ...grpc.CallOption) (*UpdateUserMoneyResp, error)
+	GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error)
+	GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error)
+	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 }
 
-type userClient struct {
+type usercenterClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserClient(cc grpc.ClientConnInterface) UserClient {
-	return &userClient{cc}
+func NewUsercenterClient(cc grpc.ClientConnInterface) UsercenterClient {
+	return &usercenterClient{cc}
 }
 
-func (c *userClient) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RegisterResp)
-	err := c.cc.Invoke(ctx, User_Register_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+func (c *usercenterClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LoginResp)
-	err := c.cc.Invoke(ctx, User_Login_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Usercenter_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
+func (c *usercenterClient) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GenerateTokenResp)
-	err := c.cc.Invoke(ctx, User_GenerateToken_FullMethodName, in, out, cOpts...)
+	out := new(RegisterResp)
+	err := c.cc.Invoke(ctx, Usercenter_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LogoutResp)
-	err := c.cc.Invoke(ctx, User_Logout_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
+func (c *usercenterClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetUserInfoResp)
-	err := c.cc.Invoke(ctx, User_GetUserInfo_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) UpdateEmail(ctx context.Context, in *UpdateEmailReq, opts ...grpc.CallOption) (*UpdateEmailResp, error) {
+func (c *usercenterClient) GetUserAuthByAuthKey(ctx context.Context, in *GetUserAuthByAuthKeyReq, opts ...grpc.CallOption) (*GetUserAuthByAuthKeyResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateEmailResp)
-	err := c.cc.Invoke(ctx, User_UpdateEmail_FullMethodName, in, out, cOpts...)
+	out := new(GetUserAuthByAuthKeyResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserAuthByAuthKey_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) UpdatePassword(ctx context.Context, in *UpdatePasswordReq, opts ...grpc.CallOption) (*UpdatePasswordResp, error) {
+func (c *usercenterClient) GetUserAuthByUserId(ctx context.Context, in *GetUserAuthByUserIdReq, opts ...grpc.CallOption) (*GetUserAuthyUserIdResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdatePasswordResp)
-	err := c.cc.Invoke(ctx, User_UpdatePassword_FullMethodName, in, out, cOpts...)
+	out := new(GetUserAuthyUserIdResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserAuthByUserId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error) {
+func (c *usercenterClient) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateUserInfoResp)
-	err := c.cc.Invoke(ctx, User_UpdateUserInfo_FullMethodName, in, out, cOpts...)
+	out := new(GenerateTokenResp)
+	err := c.cc.Invoke(ctx, Usercenter_GenerateToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userClient) GetUserMoney(ctx context.Context, in *GetUserMoneyReq, opts ...grpc.CallOption) (*GetUserMoneyResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserMoneyResp)
-	err := c.cc.Invoke(ctx, User_GetUserMoney_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) GetUserAddressList(ctx context.Context, in *GetUserAddressListReq, opts ...grpc.CallOption) (*GetUserAddressListResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserAddressListResp)
-	err := c.cc.Invoke(ctx, User_GetUserAddressList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) CreateUserAddress(ctx context.Context, in *CreateUserAddressReq, opts ...grpc.CallOption) (*CreateUserAddressResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateUserAddressResp)
-	err := c.cc.Invoke(ctx, User_CreateUserAddress_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) UpdateUserAddress(ctx context.Context, in *UpdateUserAddressReq, opts ...grpc.CallOption) (*UpdateUserAddressResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateUserAddressResp)
-	err := c.cc.Invoke(ctx, User_UpdateUserAddress_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) DeleteUserAddress(ctx context.Context, in *DeleteUserAddressReq, opts ...grpc.CallOption) (*DeleteUserAddressResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteUserAddressResp)
-	err := c.cc.Invoke(ctx, User_DeleteUserAddress_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) GetUserAddressDetail(ctx context.Context, in *GetUserAddressDetailReq, opts ...grpc.CallOption) (*GetUserAddressDetailResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUserAddressDetailResp)
-	err := c.cc.Invoke(ctx, User_GetUserAddressDetail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) CheckUserExists(ctx context.Context, in *CheckUserExistsReq, opts ...grpc.CallOption) (*CheckUserExistsResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckUserExistsResp)
-	err := c.cc.Invoke(ctx, User_CheckUserExists_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) CheckUserAndAddressExists(ctx context.Context, in *CheckUserAndAddressExistsReq, opts ...grpc.CallOption) (*CheckUserAndAddressExistsResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckUserAndAddressExistsResp)
-	err := c.cc.Invoke(ctx, User_CheckUserAndAddressExists_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userClient) UpdateUserMoney(ctx context.Context, in *UpdateUserMoneyReq, opts ...grpc.CallOption) (*UpdateUserMoneyResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateUserMoneyResp)
-	err := c.cc.Invoke(ctx, User_UpdateUserMoney_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// UserServer is the server API for User service.
-// All implementations must embed UnimplementedUserServer
+// UsercenterServer is the server API for Usercenter service.
+// All implementations must embed UnimplementedUsercenterServer
 // for forward compatibility.
-type UserServer interface {
-	// user
-	Register(context.Context, *RegisterReq) (*RegisterResp, error)
+//
+// service
+type UsercenterServer interface {
 	Login(context.Context, *LoginReq) (*LoginResp, error)
-	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
-	Logout(context.Context, *LogoutReq) (*LogoutResp, error)
+	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoResp, error)
-	UpdateEmail(context.Context, *UpdateEmailReq) (*UpdateEmailResp, error)
-	UpdatePassword(context.Context, *UpdatePasswordReq) (*UpdatePasswordResp, error)
-	UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*UpdateUserInfoResp, error)
-	GetUserMoney(context.Context, *GetUserMoneyReq) (*GetUserMoneyResp, error)
-	// userAddress
-	GetUserAddressList(context.Context, *GetUserAddressListReq) (*GetUserAddressListResp, error)
-	CreateUserAddress(context.Context, *CreateUserAddressReq) (*CreateUserAddressResp, error)
-	UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error)
-	DeleteUserAddress(context.Context, *DeleteUserAddressReq) (*DeleteUserAddressResp, error)
-	GetUserAddressDetail(context.Context, *GetUserAddressDetailReq) (*GetUserAddressDetailResp, error)
-	// other
-	CheckUserExists(context.Context, *CheckUserExistsReq) (*CheckUserExistsResp, error)
-	CheckUserAndAddressExists(context.Context, *CheckUserAndAddressExistsReq) (*CheckUserAndAddressExistsResp, error)
-	UpdateUserMoney(context.Context, *UpdateUserMoneyReq) (*UpdateUserMoneyResp, error)
-	mustEmbedUnimplementedUserServer()
+	GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyReq) (*GetUserAuthByAuthKeyResp, error)
+	GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdReq) (*GetUserAuthyUserIdResp, error)
+	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
+	mustEmbedUnimplementedUsercenterServer()
 }
 
-// UnimplementedUserServer must be embedded to have
+// UnimplementedUsercenterServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedUserServer struct{}
+type UnimplementedUsercenterServer struct{}
 
-func (UnimplementedUserServer) Register(context.Context, *RegisterReq) (*RegisterResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
-}
-func (UnimplementedUserServer) Login(context.Context, *LoginReq) (*LoginResp, error) {
+func (UnimplementedUsercenterServer) Login(context.Context, *LoginReq) (*LoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedUserServer) GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
+func (UnimplementedUsercenterServer) Register(context.Context, *RegisterReq) (*RegisterResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedUserServer) Logout(context.Context, *LogoutReq) (*LogoutResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
-}
-func (UnimplementedUserServer) GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoResp, error) {
+func (UnimplementedUsercenterServer) GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
 }
-func (UnimplementedUserServer) UpdateEmail(context.Context, *UpdateEmailReq) (*UpdateEmailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmail not implemented")
+func (UnimplementedUsercenterServer) GetUserAuthByAuthKey(context.Context, *GetUserAuthByAuthKeyReq) (*GetUserAuthByAuthKeyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByAuthKey not implemented")
 }
-func (UnimplementedUserServer) UpdatePassword(context.Context, *UpdatePasswordReq) (*UpdatePasswordResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
+func (UnimplementedUsercenterServer) GetUserAuthByUserId(context.Context, *GetUserAuthByUserIdReq) (*GetUserAuthyUserIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAuthByUserId not implemented")
 }
-func (UnimplementedUserServer) UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*UpdateUserInfoResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
+func (UnimplementedUsercenterServer) GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
 }
-func (UnimplementedUserServer) GetUserMoney(context.Context, *GetUserMoneyReq) (*GetUserMoneyResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserMoney not implemented")
-}
-func (UnimplementedUserServer) GetUserAddressList(context.Context, *GetUserAddressListReq) (*GetUserAddressListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAddressList not implemented")
-}
-func (UnimplementedUserServer) CreateUserAddress(context.Context, *CreateUserAddressReq) (*CreateUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUserAddress not implemented")
-}
-func (UnimplementedUserServer) UpdateUserAddress(context.Context, *UpdateUserAddressReq) (*UpdateUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserAddress not implemented")
-}
-func (UnimplementedUserServer) DeleteUserAddress(context.Context, *DeleteUserAddressReq) (*DeleteUserAddressResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteUserAddress not implemented")
-}
-func (UnimplementedUserServer) GetUserAddressDetail(context.Context, *GetUserAddressDetailReq) (*GetUserAddressDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserAddressDetail not implemented")
-}
-func (UnimplementedUserServer) CheckUserExists(context.Context, *CheckUserExistsReq) (*CheckUserExistsResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckUserExists not implemented")
-}
-func (UnimplementedUserServer) CheckUserAndAddressExists(context.Context, *CheckUserAndAddressExistsReq) (*CheckUserAndAddressExistsResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckUserAndAddressExists not implemented")
-}
-func (UnimplementedUserServer) UpdateUserMoney(context.Context, *UpdateUserMoneyReq) (*UpdateUserMoneyResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserMoney not implemented")
-}
-func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
-func (UnimplementedUserServer) testEmbeddedByValue()              {}
+func (UnimplementedUsercenterServer) mustEmbedUnimplementedUsercenterServer() {}
+func (UnimplementedUsercenterServer) testEmbeddedByValue()                    {}
 
-// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserServer will
+// UnsafeUsercenterServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UsercenterServer will
 // result in compilation errors.
-type UnsafeUserServer interface {
-	mustEmbedUnimplementedUserServer()
+type UnsafeUsercenterServer interface {
+	mustEmbedUnimplementedUsercenterServer()
 }
 
-func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
-	// If the following call pancis, it indicates UnimplementedUserServer was
+func RegisterUsercenterServer(s grpc.ServiceRegistrar, srv UsercenterServer) {
+	// If the following call pancis, it indicates UnimplementedUsercenterServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&User_ServiceDesc, srv)
+	s.RegisterService(&Usercenter_ServiceDesc, srv)
 }
 
-func _User_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).Register(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_Register_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).Register(ctx, req.(*RegisterReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Usercenter_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).Login(ctx, in)
+		return srv.(UsercenterServer).Login(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_Login_FullMethodName,
+		FullMethod: Usercenter_Login_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).Login(ctx, req.(*LoginReq))
+		return srv.(UsercenterServer).Login(ctx, req.(*LoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateTokenReq)
+func _Usercenter_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).GenerateToken(ctx, in)
+		return srv.(UsercenterServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_GenerateToken_FullMethodName,
+		FullMethod: Usercenter_Register_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GenerateToken(ctx, req.(*GenerateTokenReq))
+		return srv.(UsercenterServer).Register(ctx, req.(*RegisterReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LogoutReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).Logout(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_Logout_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).Logout(ctx, req.(*LogoutReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Usercenter_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).GetUserInfo(ctx, in)
+		return srv.(UsercenterServer).GetUserInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_GetUserInfo_FullMethodName,
+		FullMethod: Usercenter_GetUserInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetUserInfo(ctx, req.(*GetUserInfoReq))
+		return srv.(UsercenterServer).GetUserInfo(ctx, req.(*GetUserInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_UpdateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateEmailReq)
+func _Usercenter_GetUserAuthByAuthKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserAuthByAuthKeyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UpdateEmail(ctx, in)
+		return srv.(UsercenterServer).GetUserAuthByAuthKey(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_UpdateEmail_FullMethodName,
+		FullMethod: Usercenter_GetUserAuthByAuthKey_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdateEmail(ctx, req.(*UpdateEmailReq))
+		return srv.(UsercenterServer).GetUserAuthByAuthKey(ctx, req.(*GetUserAuthByAuthKeyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_UpdatePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePasswordReq)
+func _Usercenter_GetUserAuthByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserAuthByUserIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UpdatePassword(ctx, in)
+		return srv.(UsercenterServer).GetUserAuthByUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_UpdatePassword_FullMethodName,
+		FullMethod: Usercenter_GetUserAuthByUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdatePassword(ctx, req.(*UpdatePasswordReq))
+		return srv.(UsercenterServer).GetUserAuthByUserId(ctx, req.(*GetUserAuthByUserIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_UpdateUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserInfoReq)
+func _Usercenter_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateTokenReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).UpdateUserInfo(ctx, in)
+		return srv.(UsercenterServer).GenerateToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: User_UpdateUserInfo_FullMethodName,
+		FullMethod: Usercenter_GenerateToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdateUserInfo(ctx, req.(*UpdateUserInfoReq))
+		return srv.(UsercenterServer).GenerateToken(ctx, req.(*GenerateTokenReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_GetUserMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserMoneyReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).GetUserMoney(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_GetUserMoney_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetUserMoney(ctx, req.(*GetUserMoneyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_GetUserAddressList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserAddressListReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).GetUserAddressList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_GetUserAddressList_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetUserAddressList(ctx, req.(*GetUserAddressListReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_CreateUserAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserAddressReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).CreateUserAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_CreateUserAddress_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CreateUserAddress(ctx, req.(*CreateUserAddressReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_UpdateUserAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserAddressReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).UpdateUserAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_UpdateUserAddress_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdateUserAddress(ctx, req.(*UpdateUserAddressReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_DeleteUserAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUserAddressReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).DeleteUserAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_DeleteUserAddress_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).DeleteUserAddress(ctx, req.(*DeleteUserAddressReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_GetUserAddressDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserAddressDetailReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).GetUserAddressDetail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_GetUserAddressDetail_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetUserAddressDetail(ctx, req.(*GetUserAddressDetailReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_CheckUserExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckUserExistsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).CheckUserExists(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_CheckUserExists_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CheckUserExists(ctx, req.(*CheckUserExistsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_CheckUserAndAddressExists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckUserAndAddressExistsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).CheckUserAndAddressExists(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_CheckUserAndAddressExists_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).CheckUserAndAddressExists(ctx, req.(*CheckUserAndAddressExistsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _User_UpdateUserMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserMoneyReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).UpdateUserMoney(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_UpdateUserMoney_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).UpdateUserMoney(ctx, req.(*UpdateUserMoneyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// User_ServiceDesc is the grpc.ServiceDesc for User service.
+// Usercenter_ServiceDesc is the grpc.ServiceDesc for Usercenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var User_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.user",
-	HandlerType: (*UserServer)(nil),
+var Usercenter_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "user.usercenter",
+	HandlerType: (*UsercenterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "register",
-			Handler:    _User_Register_Handler,
-		},
-		{
 			MethodName: "login",
-			Handler:    _User_Login_Handler,
+			Handler:    _Usercenter_Login_Handler,
 		},
 		{
-			MethodName: "generateToken",
-			Handler:    _User_GenerateToken_Handler,
-		},
-		{
-			MethodName: "logout",
-			Handler:    _User_Logout_Handler,
+			MethodName: "register",
+			Handler:    _Usercenter_Register_Handler,
 		},
 		{
 			MethodName: "getUserInfo",
-			Handler:    _User_GetUserInfo_Handler,
+			Handler:    _Usercenter_GetUserInfo_Handler,
 		},
 		{
-			MethodName: "updateEmail",
-			Handler:    _User_UpdateEmail_Handler,
+			MethodName: "getUserAuthByAuthKey",
+			Handler:    _Usercenter_GetUserAuthByAuthKey_Handler,
 		},
 		{
-			MethodName: "updatePassword",
-			Handler:    _User_UpdatePassword_Handler,
+			MethodName: "getUserAuthByUserId",
+			Handler:    _Usercenter_GetUserAuthByUserId_Handler,
 		},
 		{
-			MethodName: "updateUserInfo",
-			Handler:    _User_UpdateUserInfo_Handler,
-		},
-		{
-			MethodName: "getUserMoney",
-			Handler:    _User_GetUserMoney_Handler,
-		},
-		{
-			MethodName: "getUserAddressList",
-			Handler:    _User_GetUserAddressList_Handler,
-		},
-		{
-			MethodName: "createUserAddress",
-			Handler:    _User_CreateUserAddress_Handler,
-		},
-		{
-			MethodName: "updateUserAddress",
-			Handler:    _User_UpdateUserAddress_Handler,
-		},
-		{
-			MethodName: "deleteUserAddress",
-			Handler:    _User_DeleteUserAddress_Handler,
-		},
-		{
-			MethodName: "getUserAddressDetail",
-			Handler:    _User_GetUserAddressDetail_Handler,
-		},
-		{
-			MethodName: "checkUserExists",
-			Handler:    _User_CheckUserExists_Handler,
-		},
-		{
-			MethodName: "checkUserAndAddressExists",
-			Handler:    _User_CheckUserAndAddressExists_Handler,
-		},
-		{
-			MethodName: "updateUserMoney",
-			Handler:    _User_UpdateUserMoney_Handler,
+			MethodName: "generateToken",
+			Handler:    _Usercenter_GenerateToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

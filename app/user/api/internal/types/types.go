@@ -3,121 +3,52 @@
 
 package types
 
-type Address struct {
-	ID            int64  `json:"id"`
-	IsDefault     int64  `json:"isDefault"`
-	Province      string `json:"province"`
-	City          string `json:"city"`
-	Region        string `json:"region"`
-	DetailAddress string `json:"detailAddress"`
-	Name          string `json:"name"`
-	Phone         string `json:"phone"`
-}
-
-type CreateUserAddressReq struct {
-	IsDefault     int64  `json:"isDefault"`
-	Province      string `json:"province"`
-	City          string `json:"city"`
-	Region        string `json:"region"`
-	DetailAddress string `json:"detailAddress"`
-	Name          string `json:"name"`
-	Phone         string `json:"phone"`
-}
-
-type DeleteUserAddressReq struct {
-	ID int64 `json:"id"`
-}
-
-type EmailReq struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Code     string `json:"code"`
-}
-
-type GetUserInfoResp struct {
-	UserInfo User `json:"userInfo"`
-}
-
-type GetUserMoneyReq struct {
-	Password string `json:"password"`
-}
-
-type GetUserMoneyResp struct {
-	Money float64 `json:"money"`
-}
-
-type JwtAccess struct {
-	AccessToken  string `json:"accessToken"`
-	AccessExpire int64  `json:"accessExpire"`
-	RefreshAfter int64  `json:"refreshAfter"`
-}
-
 type LoginReq struct {
 	Mobile   string `json:"mobile"`
 	Password string `json:"password"`
 }
 
 type LoginResp struct {
-	JwtAccess JwtAccess `json:"jwtAccess"`
-}
-
-type LogoutReq struct {
-	AccessToken string `json:"accessToken"`
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+	RefreshAfter int64  `json:"refreshAfter"`
 }
 
 type RegisterReq struct {
-	Mobile     string `json:"mobile"`
-	Password   string `json:"password"`
-	RePassword string `json:"rePassword"`
+	Mobile   string `json:"mobile"`
+	Password string `json:"password"`
 }
 
 type RegisterResp struct {
-	JwtAccess JwtAccess `json:"jwtAccess"`
-}
-
-type SendCodeReq struct {
-	Email string `json:"email"`
-}
-
-type UpdatePasswordReq struct {
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
-	RePassword  string `json:"rePassword"`
-}
-
-type UpdateUserAddressReq struct {
-	ID            int64  `json:"id"`
-	IsDefault     int64  `json:"isDefault"`
-	Province      string `json:"province"`
-	City          string `json:"city"`
-	Region        string `json:"region"`
-	DetailAddress string `json:"detailAddress"`
-	Name          string `json:"name"`
-	Phone         string `json:"phone"`
-}
-
-type UpdateUserInfoReq struct {
-	Username     string `json:"username"`
-	Sex          int64  `json:"sex"`
-	Signature    string `json:"signature"`
-	Introduction string `json:"introduction"`
-}
-
-type UploadUserImgReq struct {
-	UserID int64 `form:"userId"`
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+	RefreshAfter int64  `json:"refreshAfter"`
 }
 
 type User struct {
-	ID           int64  `json:"id"`
-	Mobile       string `json:"mobile"`
-	Username     string `json:"username"`
-	Email        string `json:"email"`
-	Sex          int64  `json:"sex"`
-	HeaderImg    string `json:"headerImg"`
-	Signature    string `json:"signature"`
-	Introduction string `json:"introduction"`
+	Id       int64  `json:"id"`
+	Mobile   string `json:"mobile"`
+	Nickname string `json:"nickname"`
+	Sex      int64  `json:"sex"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
 }
 
-type UserAddressListResp struct {
-	List []Address `json:"list"`
+type UserInfoReq struct {
+}
+
+type UserInfoResp struct {
+	UserInfo User `json:"userInfo"`
+}
+
+type WXMiniAuthReq struct {
+	Code          string `json:"code"`
+	IV            string `json:"iv"`
+	EncryptedData string `json:"encryptedData"`
+}
+
+type WXMiniAuthResp struct {
+	AccessToken  string `json:"accessToken"`
+	AccessExpire int64  `json:"accessExpire"`
+	RefreshAfter int64  `json:"refreshAfter"`
 }

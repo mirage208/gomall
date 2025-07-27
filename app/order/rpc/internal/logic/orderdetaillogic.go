@@ -23,6 +23,7 @@ func NewOrderDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Order
 	}
 }
 
+// 订单详情
 func (l *OrderDetailLogic) OrderDetail(in *order.OrderDetailReq) (*order.OrderDetailResp, error) {
 	// todo: add your logic here and delete this line
 

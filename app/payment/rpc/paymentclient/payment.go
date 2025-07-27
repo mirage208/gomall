@@ -14,14 +14,25 @@ import (
 )
 
 type (
-	GetPaymentDetailReq  = payment.GetPaymentDetailReq
-	GetPaymentDetailResp = payment.GetPaymentDetailResp
-	OrderPaymentReq      = payment.OrderPaymentReq
-	OrderPaymentResp     = payment.OrderPaymentResp
+	CreatePaymentReq                     = payment.CreatePaymentReq
+	CreatePaymentResp                    = payment.CreatePaymentResp
+	GetPaymentBySnReq                    = payment.GetPaymentBySnReq
+	GetPaymentBySnResp                   = payment.GetPaymentBySnResp
+	GetPaymentSuccessRefundByOrderSnReq  = payment.GetPaymentSuccessRefundByOrderSnReq
+	GetPaymentSuccessRefundByOrderSnResp = payment.GetPaymentSuccessRefundByOrderSnResp
+	PaymentDetail                        = payment.PaymentDetail
+	UpdateTradeStateReq                  = payment.UpdateTradeStateReq
+	UpdateTradeStateResp                 = payment.UpdateTradeStateResp
 
 	Payment interface {
-		OrderPayment(ctx context.Context, in *OrderPaymentReq, opts ...grpc.CallOption) (*OrderPaymentResp, error)
-		GetPaymentDetail(ctx context.Context, in *GetPaymentDetailReq, opts ...grpc.CallOption) (*GetPaymentDetailResp, error)
+		// 创建微信支付预处理订单
+		CreatePayment(ctx context.Context, in *CreatePaymentReq, opts ...grpc.CallOption) (*CreatePaymentResp, error)
+		// 根据sn查询流水记录
+		GetPaymentBySn(ctx context.Context, in *GetPaymentBySnReq, opts ...grpc.CallOption) (*GetPaymentBySnResp, error)
+		// 更新交易状态
+		UpdateTradeState(ctx context.Context, in *UpdateTradeStateReq, opts ...grpc.CallOption) (*UpdateTradeStateResp, error)
+		// 根据订单sn查询流水记录
+		GetPaymentSuccessRefundByOrderSn(ctx context.Context, in *GetPaymentSuccessRefundByOrderSnReq, opts ...grpc.CallOption) (*GetPaymentSuccessRefundByOrderSnResp, error)
 	}
 
 	defaultPayment struct {
@@ -35,12 +46,26 @@ func NewPayment(cli zrpc.Client) Payment {
 	}
 }
 
-func (m *defaultPayment) OrderPayment(ctx context.Context, in *OrderPaymentReq, opts ...grpc.CallOption) (*OrderPaymentResp, error) {
+// 创建微信支付预处理订单
+func (m *defaultPayment) CreatePayment(ctx context.Context, in *CreatePaymentReq, opts ...grpc.CallOption) (*CreatePaymentResp, error) {
 	client := payment.NewPaymentClient(m.cli.Conn())
-	return client.OrderPayment(ctx, in, opts...)
+	return client.CreatePayment(ctx, in, opts...)
 }
 
-func (m *defaultPayment) GetPaymentDetail(ctx context.Context, in *GetPaymentDetailReq, opts ...grpc.CallOption) (*GetPaymentDetailResp, error) {
+// 根据sn查询流水记录
+func (m *defaultPayment) GetPaymentBySn(ctx context.Context, in *GetPaymentBySnReq, opts ...grpc.CallOption) (*GetPaymentBySnResp, error) {
 	client := payment.NewPaymentClient(m.cli.Conn())
-	return client.GetPaymentDetail(ctx, in, opts...)
+	return client.GetPaymentBySn(ctx, in, opts...)
+}
+
+// 更新交易状态
+func (m *defaultPayment) UpdateTradeState(ctx context.Context, in *UpdateTradeStateReq, opts ...grpc.CallOption) (*UpdateTradeStateResp, error) {
+	client := payment.NewPaymentClient(m.cli.Conn())
+	return client.UpdateTradeState(ctx, in, opts...)
+}
+
+// 根据订单sn查询流水记录
+func (m *defaultPayment) GetPaymentSuccessRefundByOrderSn(ctx context.Context, in *GetPaymentSuccessRefundByOrderSnReq, opts ...grpc.CallOption) (*GetPaymentSuccessRefundByOrderSnResp, error) {
+	client := payment.NewPaymentClient(m.cli.Conn())
+	return client.GetPaymentSuccessRefundByOrderSn(ctx, in, opts...)
 }

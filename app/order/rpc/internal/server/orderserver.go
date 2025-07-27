@@ -23,38 +23,26 @@ func NewOrderServer(svcCtx *svc.ServiceContext) *OrderServer {
 	}
 }
 
-func (s *OrderServer) CreateProductOrder(ctx context.Context, in *order.CreateProductOrderReq) (*order.CreateOrderResp, error) {
-	l := logic.NewCreateProductOrderLogic(ctx, s.svcCtx)
-	return l.CreateProductOrder(in)
+// 下订单
+func (s *OrderServer) CreateOrder(ctx context.Context, in *order.CreateOrderReq) (*order.CreateOrderResp, error) {
+	l := logic.NewCreateOrderLogic(ctx, s.svcCtx)
+	return l.CreateOrder(in)
 }
 
-func (s *OrderServer) CreateSeckillOrder(ctx context.Context, in *order.CreateSeckillOrderReq) (*order.CreateOrderResp, error) {
-	l := logic.NewCreateSeckillOrderLogic(ctx, s.svcCtx)
-	return l.CreateSeckillOrder(in)
-}
-
-func (s *OrderServer) OrderList(ctx context.Context, in *order.OrderListReq) (*order.OrderListResp, error) {
-	l := logic.NewOrderListLogic(ctx, s.svcCtx)
-	return l.OrderList(in)
-}
-
+// 订单详情
 func (s *OrderServer) OrderDetail(ctx context.Context, in *order.OrderDetailReq) (*order.OrderDetailResp, error) {
 	l := logic.NewOrderDetailLogic(ctx, s.svcCtx)
 	return l.OrderDetail(in)
 }
 
-func (s *OrderServer) DeleteOrder(ctx context.Context, in *order.DeleteOrderReq) (*order.DeleteOrderResp, error) {
-	l := logic.NewDeleteOrderLogic(ctx, s.svcCtx)
-	return l.DeleteOrder(in)
+// 更新订单状态
+func (s *OrderServer) UpdateOrderTradeState(ctx context.Context, in *order.UpdateOrderTradeStateReq) (*order.UpdateOrderTradeStateResp, error) {
+	l := logic.NewUpdateOrderTradeStateLogic(ctx, s.svcCtx)
+	return l.UpdateOrderTradeState(in)
 }
 
-func (s *OrderServer) UpdateOrderStatus(ctx context.Context, in *order.UpdateOrderStatusReq) (*order.UpdateOrderStatusResp, error) {
-	l := logic.NewUpdateOrderStatusLogic(ctx, s.svcCtx)
-	return l.UpdateOrderStatus(in)
-}
-
-// other
-func (s *OrderServer) GetOrderOnlyDetail(ctx context.Context, in *order.GetOrderOnlyDetailReq) (*order.GetOrderOnlyDetailResp, error) {
-	l := logic.NewGetOrderOnlyDetailLogic(ctx, s.svcCtx)
-	return l.GetOrderOnlyDetail(in)
+// 用户订单
+func (s *OrderServer) UserOrderList(ctx context.Context, in *order.UserOrderListReq) (*order.UserOrderListResp, error) {
+	l := logic.NewUserOrderListLogic(ctx, s.svcCtx)
+	return l.UserOrderList(in)
 }

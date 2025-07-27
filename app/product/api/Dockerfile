@@ -29,4 +29,4 @@ COPY app/product/api/etc /app/etc
 
 EXPOSE 8002
 
-CMD ["./product_api", "-f", "etc/product-api.yaml"]
+CMD ["./product_api", "-f", "etc/product.yaml"]
