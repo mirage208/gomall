@@ -18,7 +18,7 @@ for app in user product order payment cart; do
 
             goctl model mysql ddl --src "$sql_file" \
                 --dir "$PROJECT_ROOT/app/$app/model" \
-                --style gozero --strict
+                --style gozero --strict --cache
         else
             echo "SQL file not found: $sql_file"
         fi
