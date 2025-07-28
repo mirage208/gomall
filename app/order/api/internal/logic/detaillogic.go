@@ -5,6 +5,7 @@ import (
 
 	"github.com/mirage208/gomall/app/order/api/internal/svc"
 	"github.com/mirage208/gomall/app/order/api/internal/types"
+	"github.com/mirage208/gomall/app/order/rpc/pb/order"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,18 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 }
 
 func (l *DetailLogic) Detail(req *types.DetailRequest) (resp *types.DetailResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.OrderRpc.Detail(l.ctx, &order.DetailRequest{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.DetailResponse{
+		Id:     res.Id,
+		Uid:    res.Uid,
+		Pid:    res.Pid,
+		Amount: res.Amount,
+		Status: res.Status,
+	}, nil
 }

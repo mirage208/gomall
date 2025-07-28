@@ -31,11 +31,7 @@ type ListRequest struct {
 }
 
 type ListResponse struct {
-	Id     int64 `json:"id"`
-	Uid    int64 `json:"uid"`
-	Pid    int64 `json:"pid"`
-	Amount int64 `json:"amount"`
-	Status int64 `json:"status"`
+	List []DetailResponse `json:"list"`
 }
 
 type RemoveRequest struct {

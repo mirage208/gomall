@@ -5,6 +5,7 @@ import (
 
 	"github.com/mirage208/gomall/app/order/api/internal/svc"
 	"github.com/mirage208/gomall/app/order/api/internal/types"
+	"github.com/mirage208/gomall/app/order/rpc/pb/order"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,17 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.OrderRpc.Create(l.ctx, &order.CreateRequest{
+		Uid:    req.Uid,
+		Pid:    req.Pid,
+		Amount: req.Amount,
+		Status: req.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.CreateResponse{
+		Id: res.Id,
+	}, nil
 }

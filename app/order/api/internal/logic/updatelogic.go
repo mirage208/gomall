@@ -5,6 +5,7 @@ import (
 
 	"github.com/mirage208/gomall/app/order/api/internal/svc"
 	"github.com/mirage208/gomall/app/order/api/internal/types"
+	"github.com/mirage208/gomall/app/order/rpc/pb/order"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,16 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogi
 }
 
 func (l *UpdateLogic) Update(req *types.UpdateRequest) (resp *types.UpdateResponse, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.OrderRpc.Update(l.ctx, &order.UpdateRequest{
+		Id:     req.Id,
+		Uid:    &req.Uid,
+		Pid:    &req.Pid,
+		Amount: &req.Amount,
+		Status: &req.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.UpdateResponse{}, nil
 }
