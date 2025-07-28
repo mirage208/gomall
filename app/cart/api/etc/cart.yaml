@@ -8,3 +8,23 @@ DevServer:
   Port: 6005
   MetricsPath: /metrics
   EnableMetrics: true
+
+Mysql:
+  DataSource: mysql_dev:MysqlDev#@tcp(rm-cn-x4t4dacrk0002fvo.rwlb.rds.aliyuncs.com:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+- Host: r-uf6xro0hktcq0czhdwpd.redis.rds.aliyuncs.com:6379
+  Type: node
+  User: redis_dev
+  Pass: SuperDev#
+
+Auth:
+  AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
+  AccessExpire: 86400
+
+CartRpc:
+  # Etcd:
+  #   Hosts:
+  #   - 127.0.0.1:2379
+  #   Key: cart.rpc
+  Target: k8s://go-mall/cart-rpc-svc:9005
