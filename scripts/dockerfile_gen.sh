@@ -59,6 +59,7 @@ for app in user product order payment cart; do
 
         if [[ $? -eq 0 ]]; then
             echo "✓ Dockerfile generated successfully for $app API service"
+            mv Dockerfile "$PROJECT_ROOT/build/docker/${app}_api.Dockerfile"
         else
             echo "✗ Failed to generate Dockerfile for $app API service"
         fi
