@@ -46,7 +46,7 @@ type (
 @server (
 	jwt: Auth
 )
-service Pay {
+service payment {
 	@doc "发起支付请求"
 	@handler Create
 	post /api/pay/create (CreateRequest) returns (CreateResponse)
