@@ -3,6 +3,7 @@ module github.com/mirage208/gomall
 go 1.24.4
 
 require (
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/zeromicro/go-zero v1.8.5
 	golang.org/x/crypto v0.38.0
 	google.golang.org/grpc v1.74.2
