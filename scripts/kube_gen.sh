@@ -54,7 +54,7 @@ for app in user product order payment cart; do
     echo "Generating Kubernetes manifests for API service: $app (port: $api_port)"
     goctl kube deploy \
         -replicas 3 -requestCpu 200 -requestMem 50 -limitCpu 300 -limitMem 100 \
-        -name ${app}-rpc -namespace go-mall -image crpi-uuzhidt8pbh6o5xf.cn-shanghai.personal.cr.aliyuncs.com/mirage208/mall:${app}-api \
+        -name ${app}-api -namespace go-mall -image crpi-uuzhidt8pbh6o5xf.cn-shanghai.personal.cr.aliyuncs.com/mirage208/mall:${app}-api \
         -o "$api_yml" -port ${api_port} --serviceAccount find-endpoints
 
     if [[ $? -eq 0 ]]; then
