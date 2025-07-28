@@ -1,3 +1,10 @@
 Name: cart
 Host: 0.0.0.0
-Port: 8888
+Port: 8005
+
+# API Metrics配置
+DevServer:
+  Enabled: true
+  Port: 6005
+  MetricsPath: /metrics
+  EnableMetrics: true
