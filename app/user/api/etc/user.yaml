@@ -21,3 +21,10 @@ CacheRedis:
 Auth:
   AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
   AccessExpire: 86400
+
+UserRpc:
+  # Etcd:
+  #   Endpoints:
+  #   - 127.0.0.1:2379
+  #   Key: user.rpc
+  Target: k8s://go-mall/user-rpc-svc:9001
