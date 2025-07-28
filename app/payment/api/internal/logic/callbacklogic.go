@@ -5,6 +5,7 @@ import (
 
 	"github.com/mirage208/gomall/app/payment/api/internal/svc"
 	"github.com/mirage208/gomall/app/payment/api/internal/types"
+	"github.com/mirage208/gomall/app/payment/rpc/pb/payment"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,7 +26,17 @@ func NewCallbackLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Callback
 }
 
 func (l *CallbackLogic) Callback(req *types.CallbackRequest) (resp *types.CallbackResponse, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.PaymentRpc.Callback(l.ctx, &payment.CallbackRequest{
+		Id:     req.Id,
+		Uid:    req.Uid,
+		Oid:    req.Oid,
+		Amount: req.Amount,
+		Source: req.Source,
+		Status: req.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.CallbackResponse{}, nil
 }
