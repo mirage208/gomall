@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Check for --override parameter
-OVERRIDE_MODE=false
-if [[ "$1" == "--override" ]]; then
-    OVERRIDE_MODE=true
-    echo "Override mode enabled: existing Kubernetes manifests will be deleted and regenerated"
-fi
 
 # Get the script directory and project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -46,12 +40,12 @@ for app in user product order payment cart; do
     rpc_yml="$PROJECT_ROOT/build/ci/${app}-rpc.yaml"
     api_yml="$PROJECT_ROOT/build/ci/${app}-api.yaml"
 
-    # Delete existing Kubernetes manifests if override mode is enabled
-    if [[ "$OVERRIDE_MODE" == true && -f "$api_yml" ]]; then
+    # Delete existing Kubernetes manifests
+    if [[ "$api_yml" ]]; then
         echo "Deleting existing Kubernetes manifests in $api_dir"
         rm -f "$api_yml"
     fi
-    if [[ "$OVERRIDE_MODE" == true && -f "$rpc_yml" ]]; then
+    if [[ -f "$rpc_yml" ]]; then
         echo "Deleting existing Kubernetes manifests in $rpc_dir"
         rm -f "$rpc_yml"
     fi
@@ -86,7 +80,3 @@ for app in user product order payment cart; do
 done
 
 echo "Kubernetes manifests generation completed!"
-echo ""
-echo "Usage:"
-echo "  $0          - Generate Kubernetes manifests (skip if already exist)"
-echo "  $0 --override - Delete existing Kubernetes manifests and regenerate them"
