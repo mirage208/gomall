@@ -2,14 +2,18 @@ package svc
 
 import (
 	"github.com/mirage208/gomall/app/product/api/internal/config"
+	"github.com/mirage208/gomall/app/product/rpc/productclient"
+	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type ServiceContext struct {
-	Config config.Config
+	Config     config.Config
+	ProductRpc productclient.Product
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config: c,
+		Config:     c,
+		ProductRpc: productclient.NewProduct(zrpc.MustNewClient(c.ProductRpc)),
 	}
 }
