@@ -1,6 +1,8 @@
 package svc
 
 import (
+	"database/sql"
+
 	"github.com/mirage208/gomall/app/order/model"
 	"github.com/mirage208/gomall/app/order/rpc/internal/config"
 	"github.com/mirage208/gomall/app/product/rpc/productclient"
@@ -12,6 +14,7 @@ import (
 type ServiceContext struct {
 	Config config.Config
 
+	OrderDB    *sql.DB
 	OrderModel model.OrderModel
 
 	UserRpc    userclient.User
@@ -20,8 +23,13 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	conn := sqlx.NewMysql(c.Mysql.DataSource)
+	rawDB, err := conn.RawDB()
+	if err != nil {
+		panic(err)
+	}
 	return &ServiceContext{
 		Config:     c,
+		OrderDB:    rawDB,
 		OrderModel: model.NewOrderModel(conn, c.CacheRedis),
 		UserRpc:    userclient.NewUser(zrpc.MustNewClient(c.UserRpc)),
 		ProductRpc: productclient.NewProduct(zrpc.MustNewClient(c.ProductRpc)),
