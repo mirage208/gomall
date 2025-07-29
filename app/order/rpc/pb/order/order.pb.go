@@ -659,9 +659,10 @@ const file_order_proto_rawDesc = "" +
 	"\x04data\x18\x01 \x03(\v2\x15.order.DetailResponseR\x04data\"\x1d\n" +
 	"\vPaidRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\"\x0e\n" +
-	"\fPaidResponse2\xc5\x02\n" +
+	"\fPaidResponse2\x82\x03\n" +
 	"\x05Order\x125\n" +
-	"\x06Create\x12\x14.order.CreateRequest\x1a\x15.order.CreateResponse\x125\n" +
+	"\x06Create\x12\x14.order.CreateRequest\x1a\x15.order.CreateResponse\x12;\n" +
+	"\fCreateRevert\x12\x14.order.CreateRequest\x1a\x15.order.CreateResponse\x125\n" +
 	"\x06Update\x12\x14.order.UpdateRequest\x1a\x15.order.UpdateResponse\x125\n" +
 	"\x06Remove\x12\x14.order.RemoveRequest\x1a\x15.order.RemoveResponse\x125\n" +
 	"\x06Detail\x12\x14.order.DetailRequest\x1a\x15.order.DetailResponse\x12/\n" +
@@ -698,19 +699,21 @@ var file_order_proto_goTypes = []any{
 var file_order_proto_depIdxs = []int32{
 	7,  // 0: order.ListResponse.data:type_name -> order.DetailResponse
 	0,  // 1: order.Order.Create:input_type -> order.CreateRequest
-	2,  // 2: order.Order.Update:input_type -> order.UpdateRequest
-	4,  // 3: order.Order.Remove:input_type -> order.RemoveRequest
-	6,  // 4: order.Order.Detail:input_type -> order.DetailRequest
-	8,  // 5: order.Order.List:input_type -> order.ListRequest
-	10, // 6: order.Order.Paid:input_type -> order.PaidRequest
-	1,  // 7: order.Order.Create:output_type -> order.CreateResponse
-	3,  // 8: order.Order.Update:output_type -> order.UpdateResponse
-	5,  // 9: order.Order.Remove:output_type -> order.RemoveResponse
-	7,  // 10: order.Order.Detail:output_type -> order.DetailResponse
-	9,  // 11: order.Order.List:output_type -> order.ListResponse
-	11, // 12: order.Order.Paid:output_type -> order.PaidResponse
-	7,  // [7:13] is the sub-list for method output_type
-	1,  // [1:7] is the sub-list for method input_type
+	0,  // 2: order.Order.CreateRevert:input_type -> order.CreateRequest
+	2,  // 3: order.Order.Update:input_type -> order.UpdateRequest
+	4,  // 4: order.Order.Remove:input_type -> order.RemoveRequest
+	6,  // 5: order.Order.Detail:input_type -> order.DetailRequest
+	8,  // 6: order.Order.List:input_type -> order.ListRequest
+	10, // 7: order.Order.Paid:input_type -> order.PaidRequest
+	1,  // 8: order.Order.Create:output_type -> order.CreateResponse
+	1,  // 9: order.Order.CreateRevert:output_type -> order.CreateResponse
+	3,  // 10: order.Order.Update:output_type -> order.UpdateResponse
+	5,  // 11: order.Order.Remove:output_type -> order.RemoveResponse
+	7,  // 12: order.Order.Detail:output_type -> order.DetailResponse
+	9,  // 13: order.Order.List:output_type -> order.ListResponse
+	11, // 14: order.Order.Paid:output_type -> order.PaidResponse
+	8,  // [8:15] is the sub-list for method output_type
+	1,  // [1:8] is the sub-list for method input_type
 	1,  // [1:1] is the sub-list for extension type_name
 	1,  // [1:1] is the sub-list for extension extendee
 	0,  // [0:1] is the sub-list for field type_name

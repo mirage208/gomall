@@ -53,7 +53,7 @@ type (
 	jwt:        JwtAuth
 	middleware: CheckUserState
 )
-service cart-api {
+service cart {
 	@doc "添加商品到购物车"
 	@handler addProductToCart
 	post /cart (AddProductToCartReq) returns (AddProductToCartResp)

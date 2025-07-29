@@ -1,9 +1,9 @@
 Name: product.rpc
 ListenOn: 0.0.0.0:9002
-Etcd:
-  Hosts:
-  - 127.0.0.1:2379
-  Key: product.rpc
+# Etcd:
+#   Hosts:
+#   - 127.0.0.1:2379
+#   Key: product.rpc
 
 # RPC Metrics配置
 DevServer:
@@ -13,9 +13,10 @@ DevServer:
   EnableMetrics: true
 
 Mysql:
-  DataSource: mall_dev:Password@dev0@tcp(localhost:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: mysql_dev:MysqlDev#@tcp(rm-cn-x4t4dacrk0002fvo.rwlb.rds.aliyuncs.com:3306)/mall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 CacheRedis:
-- Host: localhost:6379
+- Host: r-uf6xro0hktcq0czhdwpd.redis.rds.aliyuncs.com:6379
   Type: node
-  Pass:
+  User: redis_dev
+  Pass: SuperDev#

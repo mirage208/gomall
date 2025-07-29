@@ -2,7 +2,7 @@ FROM golang:alpine AS builder
 
 LABEL stage=gobuilder
 
-ENV CGO_ENABLED 0
+ENV CGO_ENABLED=0
 
 
 RUN apk update --no-cache && apk add --no-cache tzdata
@@ -14,19 +14,19 @@ ADD go.sum .
 RUN go mod download
 COPY . .
 
-RUN go build -ldflags="-s -w" -o /app/user_rpc app/user/rpc/user.go
+RUN go build -ldflags="-s -w" -o /app/cart_api app/cart/api/cart.go
 
 
 FROM scratch
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/Shanghai
-ENV TZ Asia/Shanghai
+ENV TZ=Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/user_rpc /app/user_rpc
-COPY app/user/rpc/etc /app/etc
+COPY --from=builder /app/cart_api /app/cart_api
+COPY app/cart/api/etc /app/etc
 
-EXPOSE 9001
+EXPOSE 8005
 
-CMD ["./user_rpc", "-f", "etc/user.yaml"]
+CMD ["./cart_api", "-f", "etc/cart.yaml"]

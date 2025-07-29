@@ -53,7 +53,7 @@ for app in user product order payment cart; do
     echo "  RPC: $rpc_port (metrics: $rpc_metrics_port)"
     
     # Update API configuration
-    api_config="$PROJECT_ROOT/app/$app/api/etc/${app}-api.yaml"
+    api_config="$PROJECT_ROOT/app/$app/api/etc/${app}.yaml"
     if [[ -f "$api_config" ]]; then
         # Update API port
         sed -i '' "s/^Port: .*/Port: $api_port/" "$api_config"

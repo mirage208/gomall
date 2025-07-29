@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Check for --override parameter
-OVERRIDE_MODE=false
-if [[ "$1" == "--override" ]]; then
-    OVERRIDE_MODE=true
-    echo "Override mode enabled: existing Dockerfiles will be deleted and regenerated"
-fi
-
 # Get the script directory and project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ "$(basename "$SCRIPT_DIR")" == "scripts" ]]; then
@@ -21,26 +14,26 @@ echo "Project root: $PROJECT_ROOT"
 for app in user product order payment cart; do
     # Define ports for each service
     case $app in
-        "user")
-            api_port=8001
-            rpc_port=9001
-            ;;
-        "product")
-            api_port=8002
-            rpc_port=9002
-            ;;
-        "order")
-            api_port=8003
-            rpc_port=9003
-            ;;
-        "payment")
-            api_port=8004
-            rpc_port=9004
-            ;;
-        "cart")
-            api_port=8005
-            rpc_port=9005
-            ;;
+    "user")
+        api_port=8001
+        rpc_port=9001
+        ;;
+    "product")
+        api_port=8002
+        rpc_port=9002
+        ;;
+    "order")
+        api_port=8003
+        rpc_port=9003
+        ;;
+    "payment")
+        api_port=8004
+        rpc_port=9004
+        ;;
+    "cart")
+        api_port=8005
+        rpc_port=9005
+        ;;
     esac
 
     # Check if API service exists
@@ -52,13 +45,13 @@ for app in user product order payment cart; do
         echo "Generating Dockerfile for API service: $app (port: $api_port)"
 
         cd "$api_dir"
-        
-        # Delete existing Dockerfile if override mode is enabled
-        if [[ "$OVERRIDE_MODE" == true && -f "Dockerfile" ]]; then
+
+        # Delete existing Dockerfile
+        if [[ -f "Dockerfile" ]]; then
             echo "Deleting existing Dockerfile in $api_dir"
             rm -f Dockerfile
         fi
-        
+
         goctl docker \
             --go "${app}.go" \
             --exe "${app}_api" \
@@ -66,6 +59,7 @@ for app in user product order payment cart; do
 
         if [[ $? -eq 0 ]]; then
             echo "✓ Dockerfile generated successfully for $app API service"
+            mv Dockerfile "$PROJECT_ROOT/build/docker/${app}_api.Dockerfile"
         else
             echo "✗ Failed to generate Dockerfile for $app API service"
         fi
@@ -79,13 +73,13 @@ for app in user product order payment cart; do
         echo "Generating Dockerfile for RPC service: $app (port: $rpc_port)"
 
         cd "$rpc_dir"
-        
-        # Delete existing Dockerfile if override mode is enabled
-        if [[ "$OVERRIDE_MODE" == true && -f "Dockerfile" ]]; then
+
+        # Delete existing Dockerfile
+        if [[ -f "Dockerfile" ]]; then
             echo "Deleting existing Dockerfile in $rpc_dir"
             rm -f Dockerfile
         fi
-        
+
         goctl docker \
             --go "${app}.go" \
             --exe "${app}_rpc" \
@@ -93,6 +87,7 @@ for app in user product order payment cart; do
 
         if [[ $? -eq 0 ]]; then
             echo "✓ Dockerfile generated successfully for $app RPC service"
+            mv Dockerfile "$PROJECT_ROOT/build/docker/${app}_rpc.Dockerfile"
         else
             echo "✗ Failed to generate Dockerfile for $app RPC service"
         fi
@@ -105,7 +100,3 @@ for app in user product order payment cart; do
 done
 
 echo "Dockerfile generation completed!"
-echo ""
-echo "Usage:"
-echo "  $0          - Generate Dockerfiles (skip if already exist)"
-echo "  $0 --override - Delete existing Dockerfiles and regenerate them"
