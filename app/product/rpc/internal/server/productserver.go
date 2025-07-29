@@ -42,3 +42,8 @@ func (s *ProductServer) Detail(ctx context.Context, in *product.DetailRequest) (
 	l := logic.NewDetailLogic(ctx, s.svcCtx)
 	return l.Detail(in)
 }
+
+func (s *ProductServer) PreReduceStock(ctx context.Context, in *product.PreReduceStockRequest) (*product.PreReduceStockResponse, error) {
+	l := logic.NewPreReduceStockLogic(ctx, s.svcCtx)
+	return l.PreReduceStock(in)
+}

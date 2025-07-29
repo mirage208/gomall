@@ -14,20 +14,23 @@ import (
 )
 
 type (
-	CreateRequest  = product.CreateRequest
-	CreateResponse = product.CreateResponse
-	DetailRequest  = product.DetailRequest
-	DetailResponse = product.DetailResponse
-	RemoveRequest  = product.RemoveRequest
-	RemoveResponse = product.RemoveResponse
-	UpdateRequest  = product.UpdateRequest
-	UpdateResponse = product.UpdateResponse
+	CreateRequest          = product.CreateRequest
+	CreateResponse         = product.CreateResponse
+	DetailRequest          = product.DetailRequest
+	DetailResponse         = product.DetailResponse
+	PreReduceStockRequest  = product.PreReduceStockRequest
+	PreReduceStockResponse = product.PreReduceStockResponse
+	RemoveRequest          = product.RemoveRequest
+	RemoveResponse         = product.RemoveResponse
+	UpdateRequest          = product.UpdateRequest
+	UpdateResponse         = product.UpdateResponse
 
 	Product interface {
 		Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 		Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 		Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error)
 		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+		PreReduceStock(ctx context.Context, in *PreReduceStockRequest, opts ...grpc.CallOption) (*PreReduceStockResponse, error)
 	}
 
 	defaultProduct struct {
@@ -59,4 +62,9 @@ func (m *defaultProduct) Remove(ctx context.Context, in *RemoveRequest, opts ...
 func (m *defaultProduct) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
 	client := product.NewProductClient(m.cli.Conn())
 	return client.Detail(ctx, in, opts...)
+}
+
+func (m *defaultProduct) PreReduceStock(ctx context.Context, in *PreReduceStockRequest, opts ...grpc.CallOption) (*PreReduceStockResponse, error) {
+	client := product.NewProductClient(m.cli.Conn())
+	return client.PreReduceStock(ctx, in, opts...)
 }
