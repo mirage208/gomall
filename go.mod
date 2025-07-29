@@ -4,6 +4,7 @@ go 1.24.4
 
 require (
 	github.com/dtm-labs/driver-gozero v0.0.7
+	github.com/dtm-labs/dtmcli v1.15.0
 	github.com/dtm-labs/dtmgrpc v1.15.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/zeromicro/go-zero v1.8.5
@@ -24,7 +25,6 @@ require (
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/dtm-labs/dtmcli v1.15.0 // indirect
 	github.com/dtm-labs/dtmdriver v0.0.6 // indirect
 	github.com/dtm-labs/dtmdriver-gozero v0.0.7 // indirect
 	github.com/emicklei/go-restful/v3 v3.11.0 // indirect
