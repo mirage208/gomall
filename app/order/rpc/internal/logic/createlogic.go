@@ -42,12 +42,21 @@ func (l *CreateLogic) Create(in *order.CreateRequest) (*order.CreateResponse, er
 		return nil, err
 	}
 
-	// check if the product is in stock
+	// check if the product is in stock and pre-reduce stock
 	if productInfo.Stock <= 0 {
-		l.Logger.Error("Product out of stock", logx.Field("productId", in.Pid), logx.Field("error", err))
-		return nil, status.Error(500, "Product out of stock")
+		l.Logger.Error("Product out of stock", logx.Field("productId", in.Pid))
+		return nil, status.Error(400, "Product out of stock")
+	}
+	_, err = l.svcCtx.ProductRpc.PreReduceStock(l.ctx, &product.PreReduceStockRequest{
+		ProductId: productInfo.Id,
+		Quantity:  1,
+	})
+	if err != nil {
+		l.Logger.Error("Failed to pre-reduce stock", logx.Field("productId", in.Pid), logx.Field("error", err))
+		return nil, status.Error(500, "failed to pre-reduce stock")
 	}
 
+	// create the order
 	newOrder := &model.Order{
 		Uid: in.Uid,
 		Pid: in.Pid,
