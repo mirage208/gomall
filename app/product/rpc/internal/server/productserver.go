@@ -47,3 +47,13 @@ func (s *ProductServer) PreReduceStock(ctx context.Context, in *product.PreReduc
 	l := logic.NewPreReduceStockLogic(ctx, s.svcCtx)
 	return l.PreReduceStock(in)
 }
+
+func (s *ProductServer) DecrStock(ctx context.Context, in *product.DecrStockRequest) (*product.DecrStockResponse, error) {
+	l := logic.NewDecrStockLogic(ctx, s.svcCtx)
+	return l.DecrStock(in)
+}
+
+func (s *ProductServer) DecrStockRevert(ctx context.Context, in *product.DecrStockRequest) (*product.DecrStockResponse, error) {
+	l := logic.NewDecrStockRevertLogic(ctx, s.svcCtx)
+	return l.DecrStockRevert(in)
+}
