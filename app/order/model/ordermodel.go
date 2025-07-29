@@ -16,6 +16,7 @@ type (
 	OrderModel interface {
 		orderModel
 		FindAllByUid(ctx context.Context, uid int64) ([]*Order, error)
+		FindLastOneByUidPid(ctx context.Context, uid, pid int64) (*Order, error)
 	}
 
 	customOrderModel struct {
@@ -38,6 +39,21 @@ func (m *customOrderModel) FindAllByUid(ctx context.Context, uid int64) ([]*Orde
 	switch err {
 	case nil:
 		return resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *customOrderModel) FindLastOneByUidPid(ctx context.Context, uid, pid int64) (*Order, error) {
+	var resp Order
+
+	query := fmt.Sprintf("select %s from %s where `uid` = ? and `pid` = ? order by `create_time` desc limit 1", orderRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, uid, pid)
+	switch err {
+	case nil:
+		return &resp, nil
 	case sqlx.ErrNotFound:
 		return nil, ErrNotFound
 	default:
