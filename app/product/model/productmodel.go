@@ -18,7 +18,7 @@ type (
 		productModel
 		TxInsert(ctx context.Context, tx *sql.Tx, data *Product) (sql.Result, error)
 		TxUpdate(ctx context.Context, tx *sql.Tx, data *Product) error
-		AdjustStock(ctx context.Context, productId int64, quantity int64) (sql.Result, error)
+		TxAdjustStock(ctx context.Context, tx *sql.Tx, productId int64, quantity int64) (sql.Result, error)
 	}
 
 	customProductModel struct {
@@ -43,6 +43,10 @@ func (m *customProductModel) TxInsert(ctx context.Context, tx *sql.Tx, data *Pro
 }
 
 func (m *customProductModel) TxUpdate(ctx context.Context, tx *sql.Tx, data *Product) error {
+	productIdKey := fmt.Sprintf("%s%v", cacheProductIdPrefix, data.Id)
+	if err := m.DelCacheCtx(ctx, productIdKey); err != nil {
+		return err
+	}
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, productRowsWithPlaceHolder)
 	_, err := tx.ExecContext(ctx, query, data.Name, data.Desc, data.Stock, data.Amount, data.Status, data.Id)
 	if err != nil {
@@ -53,11 +57,11 @@ func (m *customProductModel) TxUpdate(ctx context.Context, tx *sql.Tx, data *Pro
 
 // AdjustStock updates the stock of a product by the given quantity.
 // If quantity is negative, it will decrease the stock; if positive, it will increase the stock.
-func (m *customProductModel) AdjustStock(ctx context.Context, productId int64, quantity int64) (sql.Result, error) {
+func (m *customProductModel) TxAdjustStock(ctx context.Context, tx *sql.Tx, productId int64, quantity int64) (sql.Result, error) {
 	productIdKey := fmt.Sprintf("%s%v", cacheProductIdPrefix, productId)
-	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set stock = stock + ? where `id` = ? and stock >= -?", m.table)
-		return conn.ExecCtx(ctx, query, quantity, productId, quantity)
-	}, productIdKey)
-	return ret, err
+	if err := m.DelCacheCtx(ctx, productIdKey); err != nil {
+		return nil, err
+	}
+	query := fmt.Sprintf("update %s set stock = stock + ? where `id` = ? and stock >= -?", m.table)
+	return tx.ExecContext(ctx, query, quantity, productId, quantity)
 }

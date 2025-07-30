@@ -59,6 +59,10 @@ func (m *customOrderModel) TxInsert(ctx context.Context, tx *sql.Tx, data *Order
 }
 
 func (m *customOrderModel) TxUpdate(ctx context.Context, tx *sql.Tx, data *Order) error {
+	orderIdKey := fmt.Sprintf("%s%v", cacheOrderIdPrefix, data.Id)
+	if err := m.DelCacheCtx(ctx, orderIdKey); err != nil {
+		return err
+	}
 	query := fmt.Sprintf("update %s set `uid` = ?, `pid` = ?, `amount` = ?, `status` = ? where `id` = ?", m.table)
 	_, err := tx.ExecContext(ctx, query, data.Uid, data.Pid, data.Amount, data.Status, data.Id)
 	if err != nil {
