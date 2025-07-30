@@ -41,7 +41,7 @@ func (l *CreateRevertLogic) CreateRevert(in *order.CreateRequest) (*order.Create
 
 	if err := barrier.CallWithDB(l.svcCtx.OrderDB, func(tx *sql.Tx) error {
 		lastOrder.Status = -1 // Revert the order status
-		if err := l.svcCtx.OrderModel.Update(l.ctx, lastOrder); err != nil {
+		if err := l.svcCtx.OrderModel.TxUpdate(l.ctx, tx, lastOrder); err != nil {
 			return status.Error(codes.Internal, err.Error())
 		}
 		return nil

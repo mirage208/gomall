@@ -40,7 +40,7 @@ func (l *DecrStockLogic) DecrStock(in *product.DecrStockRequest) (*product.DecrS
 	// 执行 DTM 子事务
 	if err = barrier.CallWithDB(l.svcCtx.ProductDB, func(tx *sql.Tx) error {
 		// decrease the stock of the product
-		res, err := l.svcCtx.ProductModel.AdjustStock(l.ctx, in.Id, -in.Num)
+		res, err := l.svcCtx.ProductModel.TxAdjustStock(l.ctx, tx, in.Id, -in.Num)
 		if err != nil {
 			return status.Error(codes.Internal, err.Error())
 		}

@@ -66,7 +66,7 @@ func (l *CreateLogic) Create(in *order.CreateRequest) (*order.CreateResponse, er
 	}
 	// use the barrier to ensure atomicity
 	if err := barrier.CallWithDB(l.svcCtx.OrderDB, func(tx *sql.Tx) error {
-		res, err := l.svcCtx.OrderModel.Insert(l.ctx, newOrder)
+		res, err := l.svcCtx.OrderModel.TxInsert(l.ctx, tx, newOrder)
 		if err != nil {
 			l.Logger.Errorf("Failed to create order: %v", err)
 			return status.Error(codes.Internal, err.Error())
