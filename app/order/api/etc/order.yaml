@@ -22,9 +22,20 @@ Auth:
   AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
   AccessExpire: 86400
 
+ProductRpc:
+  # Etcd:
+  #   Hosts:
+  #   - 127.0.0.1:2379
+  #   Key: product.rpc
+  Target: k8s://go-mall/product-rpc-svc:9002
+
 OrderRpc:
   # Etcd:
   #   Hosts:
   #   - 127.0.0.1:2379
   #   Key: order.rpc
   Target: k8s://go-mall/order-rpc-svc:9003
+
+DTMServer: k8s://go-mall/dtm-svc:36790
+
+# DTMServer: etcd://localhost:2379/dtmservice

@@ -4,10 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	// 下面这行导入gozero的dtm驱动
-	_ "github.com/dtm-labs/driver-gozero"
-	"github.com/dtm-labs/dtmcli"
-	"github.com/dtm-labs/dtmgrpc"
+	"github.com/dtm-labs/client/dtmcli"
+	"github.com/dtm-labs/client/dtmgrpc"
 	"github.com/mirage208/gomall/app/product/rpc/internal/svc"
 	"github.com/mirage208/gomall/app/product/rpc/pb/product"
 	"github.com/zeromicro/go-zero/core/logx"

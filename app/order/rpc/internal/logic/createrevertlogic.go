@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/dtm-labs/dtmgrpc"
+	"github.com/dtm-labs/client/dtmgrpc"
 	"github.com/mirage208/gomall/app/order/rpc/internal/svc"
 	"github.com/mirage208/gomall/app/order/rpc/pb/order"
 	"google.golang.org/grpc/codes"

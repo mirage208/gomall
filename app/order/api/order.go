@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
+	_ "github.com/dtm-labs/driver-gozero" // 添加导入 `gozero` 的 `dtm` 驱动
 	"github.com/mirage208/gomall/app/order/api/internal/config"
 	"github.com/mirage208/gomall/app/order/api/internal/handler"
 	"github.com/mirage208/gomall/app/order/api/internal/svc"
-
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )

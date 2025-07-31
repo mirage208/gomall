@@ -12,9 +12,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	// 下面这行导入gozero的dtm驱动
-	_ "github.com/dtm-labs/driver-gozero"
-	"github.com/dtm-labs/dtmgrpc"
+	"github.com/dtm-labs/client/dtmgrpc"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
