@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/dtm-labs/dtmgrpc"
+	"github.com/dtm-labs/client/dtmgrpc"
 	"github.com/mirage208/gomall/app/product/rpc/internal/svc"
 	"github.com/mirage208/gomall/app/product/rpc/pb/product"
 	"google.golang.org/grpc/codes"
@@ -36,7 +36,7 @@ func (l *DecrStockRevertLogic) DecrStockRevert(in *product.DecrStockRequest) (*p
 
 	// 执行 DTM 子事务
 	if err = barrier.CallWithDB(l.svcCtx.ProductDB, func(tx *sql.Tx) error {
-		_, err := l.svcCtx.ProductModel.AdjustStock(l.ctx, in.Id, in.Num)
+		_, err := l.svcCtx.ProductModel.TxAdjustStock(l.ctx, tx, in.Id, in.Num)
 		if err != nil {
 			return status.Error(codes.Internal, err.Error())
 		}
